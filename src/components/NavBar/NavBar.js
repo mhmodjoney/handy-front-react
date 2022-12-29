@@ -12,13 +12,13 @@ export default function NavBar() {
         <NavBarItem name="Shopping" route="/shopping" changeTab={true} />
         <NavBarItem
           name="Bills"
-          route="/coming-soon"
+          route="/bills"
           hideOnSmall={true}
           changeTab={true}
         />
         <NavBarItem
           name="Money Transfer"
-          route="/coming-soon"
+          route="/transfer-money"
           hideOnSmall={true}
           changeTab={true}
         />
