@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import SignUp from "./pages/SignUp/SignUp";
-import Shopping from "./pages/Shopping/Shopping";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Shopping from "./pages/Shopping";
 import Bills from "./pages/Bills";
 import TransferMoney from "./pages/TransferMoney";
 import "./styles/navbar.css";
@@ -11,11 +11,19 @@ import "./styles/login.css";
 import "./styles/signup.css";
 import "./styles/shopping.css";
 import React, { createContext, useState } from "react";
-
+import { useLocation } from "react-router-dom";
 export const ChosenNavTab = createContext();
+
 function App() {
-  console.log(window.location.href);
-  const [navTab, setNavTab] = useState("Home");
+  const location = useLocation();
+  const route = location.pathname;
+  let nav = "Home";
+
+  if (route === "/shopping") nav = "Shopping";
+  else if (route === "/bills") nav = "Bills";
+  else if (route === "/money-transfer") nav = "Money Transfer";
+
+  const [navTab, setNavTab] = useState(nav);
   return (
     <div className="App">
       <ChosenNavTab.Provider
@@ -34,7 +42,7 @@ function App() {
           <Route exact path="/bills" element={<Bills />}></Route>
           <Route
             exact
-            path="/transfer-money"
+            path="/money-transfer"
             element={<TransferMoney />}
           ></Route>
         </Routes>

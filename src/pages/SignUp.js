@@ -5,7 +5,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import EmailIcon from "@mui/icons-material/Email";
-import { validateEmail, validatePassword } from "../../constants";
+import { validateEmail, validatePassword } from "../constants";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";

@@ -1,6 +1,6 @@
 import React from "react";
-import image from "../../assets/images/coming-soon.jpg";
-import NavBar from "../../components/NavBar/NavBar";
+import image from "../assets/images/coming-soon.jpg";
+import NavBar from "../components/NavBar/NavBar";
 
 export default function ComingSoon() {
   return (

@@ -2,7 +2,6 @@ import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import logo from "../../assets/images/logo.png";
 import NavBarItem from "./NavBarItem";
-
 export default function NavBar() {
   return (
     <nav className="navbar w-100 py-3 px-2 bg-dark position-sticky top-0 d-flex justify-content-between align-items-center">
@@ -18,7 +17,7 @@ export default function NavBar() {
         />
         <NavBarItem
           name="Money Transfer"
-          route="/transfer-money"
+          route="/money-transfer"
           hideOnSmall={true}
           changeTab={true}
         />
