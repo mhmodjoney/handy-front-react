@@ -1,7 +1,8 @@
 import React from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import logo from "../../assets/images/logo.png";
+import AccountPopUp from "./AccountPopUp";
 import NavBarItem from "./NavBarItem";
+
 export default function NavBar(props) {
   return (
     <nav className="navbar w-100 py-3 px-2 bg-dark position-sticky top-0 d-flex justify-content-between align-items-center">
@@ -48,7 +49,7 @@ export default function NavBar(props) {
           noNav={true}
           selectedTab={props.selectedTab}
         />
-        <AccountCircleIcon className="tab text-light p-0 my-0 mx-2" />
+        <AccountPopUp />
       </div>
     </nav>
   );

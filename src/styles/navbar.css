@@ -2,7 +2,7 @@
   box-shadow: 12px 9px 62px -9px rgba(41, 41, 41, 0.54);
   -webkit-box-shadow: 12px 9px 62px -9px rgba(41, 41, 41, 0.54);
   -moz-box-shadow: 12px 9px 62px -9px rgba(41, 41, 41, 0.54);
-  z-index: 9999999;
+  z-index: 3;
 }
 
 .navbar .logo {

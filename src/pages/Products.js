@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar/NavBar";
 import axios from "axios";
 import Product from "../components/Shopping/Product";
 import Loading from "../components/Loading";
+import { Divider } from "@mui/material";
 
 export default function Products() {
   const { categorey } = useParams();
@@ -20,6 +21,8 @@ export default function Products() {
   return (
     <div className="products m-0 p-0 mx-auto">
       <NavBar selectedTab="Shopping" />
+      <h2 className="shopping-header text-center m-3 rounded">{categorey}</h2>
+      <Divider className="m-2" size="4" color="grey" />
       {products.length === 0 ? (
         <Loading />
       ) : (
