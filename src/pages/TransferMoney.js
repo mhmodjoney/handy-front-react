@@ -1,9 +1,12 @@
 import React from "react";
+import NavBar from "../components/NavBar/NavBar";
 import ComingSoon from "./ComingSoon";
-import { ChosenNavTab } from "../App";
 
 export default function TransferMoney() {
-  const NavTab = React.useContext(ChosenNavTab);
-  NavTab.setNavTab("Money Transfer");
-  return <ComingSoon />;
+  return (
+    <div>
+      <NavBar selectedTab="Money Transfer" />
+      <ComingSoon />
+    </div>
+  );
 }

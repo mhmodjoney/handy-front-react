@@ -1,8 +1,11 @@
 import React from "react";
+import NavBar from "../components/NavBar/NavBar";
 import ComingSoon from "./ComingSoon";
-import { ChosenNavTab } from "../App";
 export default function Bills() {
-  const NavTab = React.useContext(ChosenNavTab);
-  NavTab.setNavTab("Bills");
-  return <ComingSoon />;
+  return (
+    <div>
+      <NavBar selectedTab="Bills" />
+      <ComingSoon />
+    </div>
+  );
 }
