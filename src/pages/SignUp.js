@@ -14,6 +14,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import moment from "moment/moment";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -192,6 +193,9 @@ export default function SignUp() {
               }}
             />
           </div>
+          <Link to="/login" className="align-self-start text-decoration-none">
+            already have an account?
+          </Link>
           <button className="btn btn-dark m-2" onClick={submit}>
             Sign Up
           </button>

@@ -8,6 +8,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import { validateEmail } from "../constants";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -79,7 +80,9 @@ export default function Login() {
             control={<Checkbox defaultChecked />}
             label="Remember me"
           />
-
+          <Link to="/signup" className="align-self-start text-decoration-none">
+            new to Handy?
+          </Link>
           <button className="btn btn-dark m-2" onClick={submit}>
             Login
           </button>
