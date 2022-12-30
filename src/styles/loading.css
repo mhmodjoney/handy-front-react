@@ -1,0 +1,9 @@
+.loading {
+  position: fixed;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex;
+  color: rgb(218, 141, 0);
+  align-items: center;
+  justify-content: center;
+}

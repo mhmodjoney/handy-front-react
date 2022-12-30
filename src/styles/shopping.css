@@ -1,3 +1,11 @@
 .shopping .categorey {
   width: 90%;
 }
+
+.products .product {
+  width: 90%;
+}
+
+.products .product .rate {
+  color: rgb(234, 208, 88);
+}

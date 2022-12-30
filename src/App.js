@@ -11,7 +11,9 @@ import "./styles/coming-soon.css";
 import "./styles/login.css";
 import "./styles/signup.css";
 import "./styles/shopping.css";
+import "./styles/loading.css";
 import React from "react";
+import Products from "./pages/Products";
 
 function App() {
   return (
@@ -22,8 +24,9 @@ function App() {
         <Route exact path="/signup" element={<SignUp />}></Route>
         <Route exact path="/shopping" element={<Shopping />}></Route>
         <Route exact path="/bills" element={<Bills />}></Route>
-        <Route exact path="/product/:id" element={<Product />}></Route>
         <Route exact path="/money-transfer" element={<TransferMoney />}></Route>
+        <Route exact path="/product/:id" element={<Product />}></Route>
+        <Route exact path="/products/:categorey" element={<Products />}></Route>
       </Routes>
     </div>
   );
