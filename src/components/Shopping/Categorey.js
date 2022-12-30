@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export default function Categorey(props) {
   return (
-    <div className="col p-0 m-0">
+    <div className="col p-0 m-0" key={props.name}>
       <Link to={`/products/${props.name}`} className="text-decoration-none">
         <Card className="categorey my-2 mx-auto">
           <CardActionArea>

@@ -17,6 +17,7 @@ export default function Login() {
   const [password, setPassword] = React.useState("");
 
   const submit = () => {
+    localStorage.setItem("logged", true);
     if (!validateEmail(email)) {
       setEmailError(true);
       return;

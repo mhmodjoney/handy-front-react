@@ -13,7 +13,7 @@ export default function Product(props) {
   const product = props.product;
   const [showmore, setShowmore] = useState(false);
   return (
-    <div className="col p-0 m-0">
+    <div className="col p-0 m-0" key={props.title}>
       <Card className="product my-2 mx-auto">
         <CardActionArea>
           <CardMedia
