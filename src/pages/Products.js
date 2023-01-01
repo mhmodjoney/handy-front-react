@@ -5,6 +5,7 @@ import axios from "axios";
 import Product from "../components/Shopping/Product";
 import Loading from "../components/Loading";
 import { Divider } from "@mui/material";
+import Footer from "../components/Footer/Footer";
 
 export default function Products() {
   const { categorey } = useParams();
@@ -32,6 +33,7 @@ export default function Products() {
           ))}
         </div>
       )}
+      {products.length === 0 ? null : <Footer />}
     </div>
   );
 }

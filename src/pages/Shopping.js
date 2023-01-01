@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "../components/NavBar/NavBar";
 import Categorey from "../components/Shopping/Categorey";
+import Footer from "../components/Footer/Footer";
 import { Categories } from "../categories";
 import { Divider } from "@mui/material";
 
@@ -17,6 +18,7 @@ export default function Shopping() {
           <Categorey name={obj.name} image={obj.image} />
         ))}
       </div>
+      <Footer />
     </div>
   );
 }
