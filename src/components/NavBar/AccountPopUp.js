@@ -46,8 +46,10 @@ export default function AccountPopUp() {
             width="100px"
             height="100px"
           ></img>
-          <h6 className="mt-1 m-0 p-0 text-black">Abdulrhman Sayed Ali</h6>
-          <p className="mt-1 p-0 text-secondary">abd@gmail.com</p>
+          <h6 className="mt-1 m-0 p-0 text-black text-center">
+            Abdulrhman Sayed Ali
+          </h6>
+          <p className="mt-1 p-0 text-secondary text-center">abd@gmail.com</p>
 
           <button className="btn btn-danger p-1 mt-1" onClick={handleClose}>
             Logout

@@ -1,13 +1,19 @@
 import React from "react";
 import logo from "../../assets/images/logo.png";
 import AccountPopUp from "./AccountPopUp";
+import Menu from "./Menu";
 import NavBarItem from "./NavBarItem";
 
 export default function NavBar(props) {
   return (
     <nav className="navbar w-100 py-3 px-2 bg-dark position-sticky top-0 d-flex justify-content-between align-items-center">
       <div className="d-flex align-items-center">
-        <img src={logo} className="logo img-fluid" alt="app icon" />
+        <Menu />
+        <img
+          src={logo}
+          className="logo img-fluid d-none d-lg-block"
+          alt="app icon"
+        />
         <NavBarItem
           name="Home"
           route="/"
