@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 import CurrencyInput from "react-currency-input-field";
 
 export default function TransferMoney() {
-  const [quantity, setQuantity] = React.useState(0);
+  const [price, setPrice] = React.useState(0);
 
   return (
     <div>
@@ -25,10 +25,10 @@ export default function TransferMoney() {
       <CurrencyInput
         placeholder="Please enter the amount"
         prefix="$"
-        value={quantity}
+        value={price}
         decimalsLimit={2}
         className="mx-auto my-4 p-3 d-table"
-        onValueChange={(value, name) => setQuantity(value)}
+        onValueChange={(value, name) => setPrice(value)}
       />
       <button className="btn btn-success mx-auto my-4 p-3 d-table">Pay</button>
       <Footer />

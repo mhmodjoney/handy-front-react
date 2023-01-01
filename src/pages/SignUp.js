@@ -26,6 +26,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [nameError, setNameError] = useState(false);
   const [PasswordError, setPasswordError] = useState(false);
   const [ConfirmPasswordError, setConfirmPasswordError] = useState(false);
 
@@ -45,6 +46,11 @@ export default function SignUp() {
       setPasswordError(true);
       error = true;
     } else setPasswordError(false);
+
+    if (!name) {
+      setNameError(true);
+      error = true;
+    } else setNameError(false);
 
     console.log(birth._i);
 
@@ -81,6 +87,8 @@ export default function SignUp() {
           <TextField
             label="Name"
             type="text"
+            error={nameError ? true : false}
+            helperText={nameError ? "this field is required" : ""}
             value={name}
             onChange={(event) => {
               setName(event.target.value);

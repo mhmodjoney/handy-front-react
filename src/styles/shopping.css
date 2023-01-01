@@ -1,4 +1,4 @@
-.shopping .categorey {
+.categorey {
   width: 90%;
 }
 
@@ -12,4 +12,23 @@
 
 .shopping-header {
   color: rgb(246, 185, 72);
+}
+
+@keyframes example {
+  from {
+    position: relative;
+    top: 100px;
+  }
+  to {
+    position: relative;
+    top: 0px;
+  }
+}
+
+.categorey,
+.product {
+  overflow: hidden;
+  background-color: red;
+  animation-name: example;
+  animation-duration: 1.5s;
 }

@@ -20,7 +20,7 @@ export default function ProductBuyButton(props) {
         buy now
       </button>
       <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>
+        <DialogTitle className="text-center">
           Select quantity for <strong>{product.title}</strong>
         </DialogTitle>
         <TextField
