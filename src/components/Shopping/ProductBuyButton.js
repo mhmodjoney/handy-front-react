@@ -20,7 +20,7 @@ export default function ProductBuyButton(props) {
         buy now
       </button>
       <Dialog onClose={handleClose} open={open}>
-        <DialogTitle className="text-center">
+        <DialogTitle className="text-center dialog-title">
           Select quantity for <strong>{product.title}</strong>
         </DialogTitle>
         <TextField
@@ -37,8 +37,10 @@ export default function ProductBuyButton(props) {
             setQuantity(event.target.value);
           }}
         />
-        <button className="btn btn-success m-2">confirm payment</button>
-        <p className="m-2">
+        <button className="btn btn-success m-2 dialog-btn ">
+          confirm payment
+        </button>
+        <p className="m-2 dialog-price">
           total price : {parseInt(quantity || "0") * product.price} $
         </p>
       </Dialog>

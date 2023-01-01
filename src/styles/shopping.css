@@ -14,7 +14,7 @@
   color: rgb(246, 185, 72);
 }
 
-@keyframes example {
+@keyframes slide-up {
   from {
     position: relative;
     top: 100px;
@@ -28,7 +28,36 @@
 .categorey,
 .product {
   overflow: hidden;
-  background-color: red;
-  animation-name: example;
+  animation-name: slide-up;
+  animation-duration: 1.5s;
+}
+
+@keyframes slide-right {
+  from {
+    position: relative;
+    right: 100px;
+  }
+  to {
+    position: relative;
+    right: 0px;
+  }
+}
+
+.dialog-title {
+  animation-name: slide-right;
+  animation-duration: 1.5s;
+}
+
+@keyframes scale {
+  from {
+    scale: 0.4;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+.dialog-btn {
+  animation-name: scale;
   animation-duration: 1.5s;
 }

@@ -22,7 +22,7 @@ export default function BillPayButton(props) {
         pay
       </button>
       <Dialog onClose={handleClose} open={open}>
-        <DialogTitle className="text-center">
+        <DialogTitle className="text-center dialog-title">
           <strong>{props.name}</strong> payment
         </DialogTitle>
         <h6 className="text-secondary text-center m-2 rounded">
@@ -56,7 +56,9 @@ export default function BillPayButton(props) {
           onValueChange={(value, name) => setPrice(value)}
         />
 
-        <button className="btn btn-success m-2">confirm payment</button>
+        <button className="btn btn-success m-2 dialog-btn">
+          confirm payment
+        </button>
       </Dialog>
     </div>
   );
