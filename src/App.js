@@ -5,7 +5,6 @@ import SignUp from "./pages/SignUp";
 import Shopping from "./pages/Shopping";
 import Bills from "./pages/Bills";
 import TransferMoney from "./pages/TransferMoney";
-import Product from "./pages/Product";
 import "./styles/navbar.css";
 import "./styles/coming-soon.css";
 import "./styles/login.css";
@@ -25,7 +24,6 @@ function App() {
         <Route exact path="/shopping" element={<Shopping />}></Route>
         <Route exact path="/bills" element={<Bills />}></Route>
         <Route exact path="/money-transfer" element={<TransferMoney />}></Route>
-        <Route exact path="/product/:id" element={<Product />}></Route>
         <Route exact path="/products/:categorey" element={<Products />}></Route>
       </Routes>
     </div>

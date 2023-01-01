@@ -8,6 +8,7 @@ import StarIcon from "@mui/icons-material/Star";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
+import ProductBuyButton from "./ProductBuyButton";
 
 export default function Product(props) {
   const product = props.product;
@@ -70,7 +71,7 @@ export default function Product(props) {
               in stokc : {product.stock}
             </Typography>
             <CardActions>
-              <button className="btn btn-secondary mx-auto">buy now</button>
+              <ProductBuyButton product={product} />
             </CardActions>
           </CardContent>
         </CardActionArea>
