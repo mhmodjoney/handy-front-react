@@ -20,7 +20,9 @@ export default function ProductBuyButton(props) {
         buy now
       </button>
       <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Select quantity</DialogTitle>
+        <DialogTitle>
+          Select quantity for <strong>{product.title}</strong>
+        </DialogTitle>
         <TextField
           className="m-2"
           label="quantity"
@@ -36,6 +38,9 @@ export default function ProductBuyButton(props) {
           }}
         />
         <button className="btn btn-success m-2">confirm payment</button>
+        <p className="m-2">
+          total price : {parseInt(quantity || "0") * product.price} $
+        </p>
       </Dialog>
     </div>
   );
