@@ -1,27 +1,50 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import EmailIcon from "@mui/icons-material/Email";
-import { validateEmail } from "../constants";
+import {validateEmail } from "../utils/utils";
+import {API_URL_ROOT } from "../data/constants";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import {Login as LoginLocal} from "../utils/Storage"
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = React.useState("");
-  const [emailError, setEmailError] = React.useState(false);
-  const [password, setPassword] = React.useState("");
-
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const submit = () => {
     if (!validateEmail(email)) {
       setEmailError(true);
       return;
     }
     setEmailError(false);
+    setLoading(true);
+    axios.post(API_URL_ROOT + "/api/Auth/login",{
+      email:email,
+      password:password
+    }).then((response) => {
+      let data = response.data;
+      LoginLocal(data.password,data.name,data.email,data.birthDate,data.gender);
+      navigate("/");
+      window.location.reload();
+    })
+    .catch((error) => {
+      setLoading(false);
+      if (error.response.status === 400) {
+        setLoginError(true);
+      }
+    });;
   };
 
   return (
@@ -82,8 +105,16 @@ export default function Login() {
           <Link to="/signup" className="align-self-start text-decoration-none">
             new to Handy?
           </Link>
-          <button className="btn btn-dark m-2" onClick={submit}>
-            Login
+         {loginError? <p className="text-danger m-0 p-0 mt-2">invalid login</p>:null}
+         <button
+            className="btn btn-dark m-2"
+            onClick={loading ? null : submit}
+          >
+            {loading ? (
+              <CircularProgress size={40} color="inherit" />
+            ) : (
+              <p className="m-0 p-0">Login</p>
+            )}
           </button>
         </div>
       </div>

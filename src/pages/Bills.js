@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar/NavBar";
 import { Divider } from "@mui/material";
 import Footer from "../components/Footer/Footer";
 import Bill from "../components/Bills/Bill";
-import { Bills as data } from "../bills";
+import { Bills as data } from "../data/bills";
 
 export default function Bills() {
   return (

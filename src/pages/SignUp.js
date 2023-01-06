@@ -5,7 +5,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import EmailIcon from "@mui/icons-material/Email";
-import { API_URL_ROOT, validateEmail, validatePassword } from "../constants";
+import { API_URL_ROOT } from "../data/constants";
+import { validateEmail, validatePassword } from "../utils/utils";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -69,20 +70,21 @@ export default function SignUp(props) {
         name: name,
         email: email,
         password: password,
-        gernder: gender,
+        gender: gender,
         birthDate: birth._i,
       })
       .then((response) => {
         setLoading(false);
-        if (response.status === 400) {
-          setEmailUsedError(true);
-          return;
-        }
+ 
 
         navigate("/login");
       })
       .catch((error) => {
         setLoading(false);
+        if (error.response.status === 400) {
+          setEmailUsedError(true);
+          return;
+        }
         console.log(error);
       });
   };
@@ -96,7 +98,7 @@ export default function SignUp(props) {
         <div className="box px-4 py-3 bg-light d-flex flex-column align-items-center rounded">
           <h3>Enter your data</h3>
           <TextField
-            error={emailError ? true : false}
+            error={emailError || emailUsedError? true : false}
             helperText={
               emailError
                 ? "please enter a valid email"
