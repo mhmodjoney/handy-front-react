@@ -5,7 +5,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import EmailIcon from "@mui/icons-material/Email";
-import { validateEmail, validatePassword } from "../constants";
+import { API_URL_ROOT, validateEmail, validatePassword } from "../constants";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -15,8 +15,11 @@ import FormLabel from "@mui/material/FormLabel";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import moment from "moment/moment";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
-export default function SignUp() {
+export default function SignUp(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -26,16 +29,22 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [emailUsedError, setEmailUsedError] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [PasswordError, setPasswordError] = useState(false);
   const [ConfirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const submit = () => {
     let error = false;
     if (!validateEmail(email)) {
       setEmailError(true);
       error = true;
-    } else setEmailError(false);
+    } else {
+      setEmailError(false);
+      setEmailUsedError(false);
+    }
 
     if (password !== confirmPassword) {
       setConfirmPasswordError(true);
@@ -52,9 +61,30 @@ export default function SignUp() {
       error = true;
     } else setNameError(false);
 
-    console.log(birth._i);
-
     if (error) return;
+
+    setLoading(true);
+    axios
+      .post(API_URL_ROOT + "/api/customer", {
+        name: name,
+        email: email,
+        password: password,
+        gernder: gender,
+        birthDate: birth._i,
+      })
+      .then((response) => {
+        setLoading(false);
+        if (response.status === 400) {
+          setEmailUsedError(true);
+          return;
+        }
+
+        navigate("/login");
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   };
 
   return (
@@ -67,7 +97,13 @@ export default function SignUp() {
           <h3>Enter your data</h3>
           <TextField
             error={emailError ? true : false}
-            helperText={emailError ? "please enter a valid email" : ""}
+            helperText={
+              emailError
+                ? "please enter a valid email"
+                : emailUsedError
+                ? "this email is already in use"
+                : ""
+            }
             label="Email"
             type="email"
             value={email}
@@ -204,8 +240,15 @@ export default function SignUp() {
           <Link to="/login" className="align-self-start text-decoration-none">
             already have an account?
           </Link>
-          <button className="btn btn-dark m-2" onClick={submit}>
-            Sign Up
+          <button
+            className="btn btn-dark m-2"
+            onClick={loading ? null : submit}
+          >
+            {loading ? (
+              <CircularProgress size={40} color="inherit" />
+            ) : (
+              <p className="m-0 p-0">Sign up</p>
+            )}
           </button>
         </div>
       </div>

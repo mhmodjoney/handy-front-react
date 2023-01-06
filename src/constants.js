@@ -1,4 +1,4 @@
-export const API_URL_ROOT = "";
+export const API_URL_ROOT = "http://maraw425-001-site1.atempurl.com";
 
 export const validateEmail = (email) => {
   return String(email)
