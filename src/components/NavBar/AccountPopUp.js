@@ -5,34 +5,54 @@ import { IconButton } from "@mui/material";
 import profile from "../../assets/images/profile.png";
 import { Logout } from "../../utils/Storage";
 import { useNavigate } from "react-router-dom";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
+import EditData from "./EditData";
 
 export default function AccountPopUp() {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+  const [dialogOpen, setDialogOpen] = React.useState(false);
 
-  const handleClick = (event) => {
+  const handleClickOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = (value) => {
+    setDialogOpen(false);
+  };
+
+  const handleClickPopover = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClosePopover = () => {
     setAnchorEl(null);
   };
 
   const handleLogout = () => {
     Logout();
-    handleClose();
+    handleClosePopover();
     navigate("/");
     window.location.reload();
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "account-popover" : undefined;
+  const handleEditData = () => {
+    handleClickOpenDialog();
+    handleClosePopover();
+  };
+  const handleGoToAdmin = () => {
+    handleClosePopover();
+  };
+
+  const popoverOpen = Boolean(anchorEl);
+  const id = popoverOpen ? "account-popover" : undefined;
   return (
     <div>
       <IconButton
         aria-describedby={id}
         variant="contained"
-        onClick={handleClick}
+        onClick={handleClickPopover}
         className="tab text-light p-0 my-0 mx-2"
       >
         <AccountCircleIcon />
@@ -40,9 +60,9 @@ export default function AccountPopUp() {
 
       <Popover
         id={id}
-        open={open}
+        open={popoverOpen}
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={handleClosePopover}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
@@ -64,14 +84,27 @@ export default function AccountPopUp() {
           <button className="btn btn-danger p-1 mt-1" onClick={handleLogout}>
             Logout
           </button>
-          <button className="btn btn-secondary p-1 mt-1" onClick={handleClose}>
+          <button
+            className="btn btn-secondary p-1 mt-1"
+            onClick={handleEditData}
+          >
             edit data
           </button>
-          <button className="btn btn-secondary p-1 mt-1" onClick={handleClose}>
+          <button
+            className="btn btn-secondary p-1 mt-1"
+            onClick={handleGoToAdmin}
+          >
             go to admin
           </button>
         </div>
       </Popover>
+
+      <Dialog onClose={handleCloseDialog} open={dialogOpen}>
+        <DialogTitle className="text-center dialog-title">
+          Edit your personal data
+        </DialogTitle>
+        <EditData/>
+      </Dialog>
     </div>
   );
 }

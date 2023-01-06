@@ -17,7 +17,8 @@ import Products from "./pages/Products";
 import { API_URL_ROOT } from "./data/constants";
 import { getData, TOKEN } from "./utils/Storage";
 import Protected from "./utils/ProtectedRoute";
-
+import Loading from "./components/Loading";
+import { Logout } from "./utils/Storage";
 const checkToken = async () => {
   let res = null;
   await axios
@@ -43,12 +44,14 @@ const checkToken = async () => {
 export const LoggedInContext = createContext();
 
 function App() {
-const [loggedIn,setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   checkToken().then((res) => {
+    setLoading(false);
     setLoggedIn(res);
+    if(!res) Logout();
   });
-
 
   return (
     <div className="App">
@@ -57,47 +60,51 @@ const [loggedIn,setLoggedIn] = useState(false);
           loggedIn: loggedIn,
         }}
       >
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/login" element={<Login />}></Route>
-          <Route exact path="/signup" element={<SignUp />}></Route>
-          <Route
-            exact
-            path="/shopping"
-            element={
-              <Protected>
-                <Shopping />
-              </Protected>
-            }
-          ></Route>
-          <Route
-            exact
-            path="/bills"
-            element={
-              <Protected>
-                <Bills />
-              </Protected>
-            }
-          ></Route>
-          <Route
-            exact
-            path="/money-transfer"
-            element={
-              <Protected>
-                <TransferMoney />
-              </Protected>
-            }
-          ></Route>
-          <Route
-            exact
-            path="/products/:categorey"
-            element={
-              <Protected>
-                <Products />
-              </Protected>
-            }
-          ></Route>
-        </Routes>
+        {loading ? (
+          <Loading />
+        ) : (
+          <Routes>
+            <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/login" element={<Login />}></Route>
+            <Route exact path="/signup" element={<SignUp />}></Route>
+            <Route
+              exact
+              path="/shopping"
+              element={
+                <Protected>
+                  <Shopping />
+                </Protected>
+              }
+            ></Route>
+            <Route
+              exact
+              path="/bills"
+              element={
+                <Protected>
+                  <Bills />
+                </Protected>
+              }
+            ></Route>
+            <Route
+              exact
+              path="/money-transfer"
+              element={
+                <Protected>
+                  <TransferMoney />
+                </Protected>
+              }
+            ></Route>
+            <Route
+              exact
+              path="/products/:categorey"
+              element={
+                <Protected>
+                  <Products />
+                </Protected>
+              }
+            ></Route>
+          </Routes>
+        )}
       </LoggedInContext.Provider>
     </div>
   );
