@@ -3,8 +3,11 @@ import logo from "../../assets/images/logo.png";
 import AccountPopUp from "./AccountPopUp";
 import Menu from "./Menu";
 import NavBarItem from "./NavBarItem";
+import { useContext } from "react";
+import { LoggedInContext } from "../../App";
 
 export default function NavBar(props) {
+  const { loggedIn } = useContext(LoggedInContext);
   return (
     <nav className="navbar w-100 py-3 px-2 bg-dark position-sticky top-0 d-flex justify-content-between align-items-center">
       <div className="d-flex align-items-center">
@@ -43,19 +46,24 @@ export default function NavBar(props) {
       </div>
 
       <div className="d-flex align-items-center">
-        <NavBarItem
-          name="Login"
-          route="/login"
-          noNav={true}
-          selectedTab={props.selectedTab}
-        />
-        <NavBarItem
-          name="Sign Up"
-          route="/signup"
-          noNav={true}
-          selectedTab={props.selectedTab}
-        />
-        <AccountPopUp />
+        {loggedIn ? (
+          <AccountPopUp />
+        ) : (
+          <>
+            <NavBarItem
+              name="Login"
+              route="/login"
+              noNav={true}
+              selectedTab={props.selectedTab}
+            />
+            <NavBarItem
+              name="Sign Up"
+              route="/signup"
+              noNav={true}
+              selectedTab={props.selectedTab}
+            />
+          </>
+        )}
       </div>
     </nav>
   );

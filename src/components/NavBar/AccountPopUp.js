@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Popover from "@mui/material/Popover";
 import { IconButton } from "@mui/material";
 import profile from "../../assets/images/profile.png";
+import { Logout } from "../../utils/Storage";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountPopUp() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -13,6 +16,13 @@ export default function AccountPopUp() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    Logout();
+    handleClose();
+    navigate("/");
+    window.location.reload();
   };
 
   const open = Boolean(anchorEl);
@@ -51,7 +61,7 @@ export default function AccountPopUp() {
           </h6>
           <p className="mt-1 p-0 text-secondary text-center">abd@gmail.com</p>
 
-          <button className="btn btn-danger p-1 mt-1" onClick={handleClose}>
+          <button className="btn btn-danger p-1 mt-1" onClick={handleLogout}>
             Logout
           </button>
           <button className="btn btn-secondary p-1 mt-1" onClick={handleClose}>
