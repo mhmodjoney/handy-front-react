@@ -11,7 +11,7 @@ import "./styles/login.css";
 import "./styles/signup.css";
 import "./styles/shopping.css";
 import "./styles/loading.css";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import Products from "./pages/Products";
 import { API_URL_ROOT } from "./data/constants";
@@ -19,6 +19,8 @@ import { getData, TOKEN } from "./utils/Storage";
 import Protected from "./utils/ProtectedRoute";
 import Loading from "./components/Loading";
 import { Logout } from "./utils/Storage";
+import VerifyEmail from "./pages/VerifyEmail";
+import Message from "./pages/Message";
 const checkToken = async () => {
   let res = null;
   await axios
@@ -47,12 +49,13 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  checkToken().then((res) => {
-    setLoading(false);
-    setLoggedIn(res);
-    if(!res) Logout();
-  });
-
+  useEffect(() => {
+    checkToken().then((res) => {
+      setLoading(false);
+      setLoggedIn(res);
+      if (!res) Logout();
+    });
+  }, []);
   return (
     <div className="App">
       <LoggedInContext.Provider
@@ -67,6 +70,12 @@ function App() {
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/login" element={<Login />}></Route>
             <Route exact path="/signup" element={<SignUp />}></Route>
+            <Route
+              exact
+              path="/verifyemail/:uuid"
+              element={<VerifyEmail />}
+            ></Route>
+            <Route exact path="/message" element={<Message />}></Route>
             <Route
               exact
               path="/shopping"
