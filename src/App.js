@@ -14,6 +14,7 @@ import "./styles/loading.css";
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import Products from "./pages/Products";
+import PaymentHistory from "./pages/PaymentHistory";
 import { API_URL_ROOT } from "./data/constants";
 import { getData, TOKEN } from "./utils/Storage";
 import Protected from "./utils/ProtectedRoute";
@@ -74,7 +75,11 @@ function App() {
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/login" element={<Login />}></Route>
             <Route exact path="/signup" element={<SignUp />}></Route>
-            <Route exact path="/forgotpassword/:uuid" element={<ForgotPassword />}></Route>
+            <Route
+              exact
+              path="/forgotpassword/:uuid"
+              element={<ForgotPassword />}
+            ></Route>
             <Route
               exact
               path="/verifyemail/:uuid"
@@ -114,6 +119,15 @@ function App() {
               element={
                 <Protected>
                   <Products />
+                </Protected>
+              }
+            ></Route>
+            <Route
+              exact
+              path="/payment-history"
+              element={
+                <Protected>
+                  <PaymentHistory />
                 </Protected>
               }
             ></Route>

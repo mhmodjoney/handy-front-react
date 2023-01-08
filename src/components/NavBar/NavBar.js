@@ -20,46 +20,48 @@ export default function NavBar(props) {
         <NavBarItem
           name="Home"
           route="/"
-          changeTab={true}
           selectedTab={props.selectedTab}
         />
         <NavBarItem
           name="Shopping"
           route="/shopping"
-          changeTab={true}
           selectedTab={props.selectedTab}
         />
         <NavBarItem
           name="Bills"
           route="/bills"
           hideOnSmall={true}
-          changeTab={true}
           selectedTab={props.selectedTab}
         />
         <NavBarItem
           name="Money Transfer"
           route="/money-transfer"
           hideOnSmall={true}
-          changeTab={true}
           selectedTab={props.selectedTab}
         />
       </div>
 
       <div className="d-flex align-items-center">
         {loggedIn ? (
-          <AccountPopUp />
+          <>
+            <NavBarItem
+              name="Payment History"
+              route="/payment-history"
+              hideOnSmall={true}
+              selectedTab={props.selectedTab}
+            />
+            <AccountPopUp />
+          </>
         ) : (
           <>
             <NavBarItem
               name="Login"
               route="/login"
-              noNav={true}
               selectedTab={props.selectedTab}
             />
             <NavBarItem
               name="Sign Up"
               route="/signup"
-              noNav={true}
               selectedTab={props.selectedTab}
             />
           </>
