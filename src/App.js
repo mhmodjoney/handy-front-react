@@ -50,11 +50,13 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    checkToken().then((res) => {
-      setLoading(false);
-      setLoggedIn(res);
-      if (!res) Logout();
-    });
+    if (getData(TOKEN)) {
+      checkToken().then((res) => {
+        setLoading(false);
+        setLoggedIn(res);
+        if (!res) Logout();
+      });
+    }
   }, []);
   return (
     <div className="App">

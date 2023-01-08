@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import WarningIcon from "@mui/icons-material/Warning";
 import InfoIcon from "@mui/icons-material/Info";
 import { useQuery } from "../custom-hooks/QueryString";
+import { useNavigate } from "react-router-dom";
 const IconClassName = "m-1";
 
 const icons = {
@@ -15,7 +16,23 @@ const icons = {
 
 export default function Message(props) {
   const data = useQuery();
-  console.log(data);
+  const next = data.get("next");
+  const style = data.get("style");
+  const text = data.get("text");
+  const [redirectSeconds, setRedirectSeconds] = useState(4);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (next) {
+      if (redirectSeconds === 0) {
+        navigate(next);
+        return;
+      }
+      setTimeout(() => {
+        setRedirectSeconds(redirectSeconds - 1);
+      }, 1000);
+    }
+  }, [redirectSeconds]);
   return (
     <div>
       <NavBar />
@@ -23,11 +40,12 @@ export default function Message(props) {
         className="d-flex align-items-center justify-content-center"
         style={{ height: "60vh" }}
       >
-        <h2 className={`alert alert-${data.get("style")}`}>
-          {icons[data.get("style")]}
-          {data.get("text")}
+        <h2 className={`alert alert-${style}`}>
+          {icons[style]}
+          {text}
         </h2>
       </div>
+      {next ? <p>redirect after {redirectSeconds} seconds</p> : null}
       <Footer />
     </div>
   );

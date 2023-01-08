@@ -75,9 +75,10 @@ export default function SignUp() {
       })
       .then((response) => {
         setLoading(false);
- 
 
-        navigate("/login");
+        navigate(
+          "/message?text=We sent you a verification link to your email please verify it&style=success"
+        );
       })
       .catch((error) => {
         setLoading(false);
@@ -98,7 +99,7 @@ export default function SignUp() {
         <div className="box px-4 py-3 bg-light d-flex flex-column align-items-center rounded">
           <h3>Enter your data</h3>
           <TextField
-            error={emailError || emailUsedError? true : false}
+            error={emailError || emailUsedError ? true : false}
             helperText={
               emailError
                 ? "please enter a valid email"
