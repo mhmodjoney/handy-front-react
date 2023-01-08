@@ -21,6 +21,8 @@ import Loading from "./components/Loading";
 import { Logout } from "./utils/Storage";
 import VerifyEmail from "./pages/VerifyEmail";
 import Message from "./pages/Message";
+import ForgotPassword from "./pages/ForgotPassword";
+
 const checkToken = async () => {
   let res = null;
   await axios
@@ -72,6 +74,7 @@ function App() {
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/login" element={<Login />}></Route>
             <Route exact path="/signup" element={<SignUp />}></Route>
+            <Route exact path="/forgotpassword/:uuid" element={<ForgotPassword />}></Route>
             <Route
               exact
               path="/verifyemail/:uuid"

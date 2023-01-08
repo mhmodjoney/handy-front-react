@@ -40,12 +40,12 @@ export default function Message(props) {
         className="d-flex align-items-center justify-content-center"
         style={{ height: "60vh" }}
       >
-        <h2 className={`alert alert-${style}`}>
+        <h2 className={`d-flex align-items-center alert alert-${style}`}>
           {icons[style]}
           {text}
         </h2>
       </div>
-      {next ? <p>redirect after {redirectSeconds} seconds</p> : null}
+      {next ? <h5 className="text-center">redirect after {redirectSeconds} seconds</h5> : null}
       <Footer />
     </div>
   );

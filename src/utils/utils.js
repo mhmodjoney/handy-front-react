@@ -8,6 +8,6 @@ export const validateEmail = (email) => {
   export const validatePassword = (password) => {
     return String(password)
       .toLowerCase()
-      .match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/);
+      .match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{12,}$/);
   };
   
