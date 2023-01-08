@@ -5,6 +5,7 @@ import { Divider } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import CurrencyInput from "react-currency-input-field";
+import ConfirmButton from "../components/MoneyTransfer/ConfirmButton";
 
 export default function TransferMoney() {
   const [price, setPrice] = React.useState(0);
@@ -30,7 +31,7 @@ export default function TransferMoney() {
         className="mx-auto my-4 p-3 d-table"
         onValueChange={(value, name) => setPrice(value)}
       />
-      <button className="btn btn-success mx-auto my-4 p-3 d-table">Pay</button>
+      <ConfirmButton name="Tishreen University" price={price} />
       <Footer />
     </div>
   );

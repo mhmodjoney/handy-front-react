@@ -17,11 +17,7 @@ export default function NavBar(props) {
           className="logo img-fluid d-none d-lg-block"
           alt="app icon"
         />
-        <NavBarItem
-          name="Home"
-          route="/"
-          selectedTab={props.selectedTab}
-        />
+        <NavBarItem name="Home" route="/" selectedTab={props.selectedTab} />
         <NavBarItem
           name="Shopping"
           route="/shopping"
@@ -39,19 +35,19 @@ export default function NavBar(props) {
           hideOnSmall={true}
           selectedTab={props.selectedTab}
         />
+        {loggedIn ? (
+          <NavBarItem
+            name="Payment History"
+            route="/payment-history"
+            hideOnSmall={true}
+            selectedTab={props.selectedTab}
+          />
+        ) : null}
       </div>
 
       <div className="d-flex align-items-center">
         {loggedIn ? (
-          <>
-            <NavBarItem
-              name="Payment History"
-              route="/payment-history"
-              hideOnSmall={true}
-              selectedTab={props.selectedTab}
-            />
-            <AccountPopUp />
-          </>
+          <AccountPopUp />
         ) : (
           <>
             <NavBarItem

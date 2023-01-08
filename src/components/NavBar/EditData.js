@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import EmailIcon from "@mui/icons-material/Email";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import { validateEmail } from "../../utils/utils";
 import InputAdornment from "@mui/material/InputAdornment";
 import moment from "moment";
-import { USERNAME, EMAIL, BIRTH, GENDER, getData } from "../../utils/Storage";
+import {
+  USERNAME,
+  EMAIL,
+  BIRTH,
+  GENDER,
+  getData,
+  setData,
+} from "../../utils/Storage";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -18,9 +24,7 @@ import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function EditData() {
-  const [email, setEmail] = useState(getData(EMAIL));
-  const [emailError, setEmailError] = useState(false);
-  const [emailUsedError, setEmailUsedError] = useState(false);
+  const email = getData(EMAIL);
   const [nameError, setNameError] = useState(false);
   const [name, setName] = useState(getData(USERNAME));
   const [birth, setBirth] = React.useState(moment(getData(BIRTH)));
@@ -29,62 +33,42 @@ export default function EditData() {
   const navigate = useNavigate();
 
   const submit = () => {
-    let error = false;
-    if (!validateEmail(email)) {
-      setEmailError(true);
-      error = true;
-    } else {
-      setEmailError(false);
-      setEmailUsedError(false);
-    }
-
     if (!name) {
       setNameError(true);
-      error = true;
-    } else setNameError(false);
-
-    if (error) return;
-
+      return;
+    }
+    setNameError(false);
     setLoading(true);
+
     axios
       .put(API_URL_ROOT + "/api/customer", {
         name: name,
         email: email,
         gender: gender,
-        birthDate: birth._i,
+        birthDate: birth._d,
       })
       .then((response) => {
         setLoading(false);
-        navigate("/");
+        setData(USERNAME, name);
+        setData(GENDER, gender);
+        setData(BIRTH, birth._d);
+        navigate(
+          "/message?text=Your profile has been Updated successfully&style=success&next=/"
+        );
       })
       .catch((error) => {
         setLoading(false);
-        navigate("/");
-        if (error.response.status === 400) {
-          setEmailUsedError(true);
-          return;
-        }
-
-        console.log(error);
+        navigate(
+          "/message?text=An error ocurred while updating your profile&style=danger&next=/"
+        );
       });
   };
   return (
     <div className="d-flex align-items-center flex-column">
       <TextField
-        error={emailError || emailUsedError ? true : false}
-        helperText={
-          emailError
-            ? "please enter a valid email"
-            : emailUsedError
-            ? "this email is already in use"
-            : ""
-        }
         label="Email"
         type="email"
         value={email}
-        onChange={(event) => {
-          setEmail(event.target.value);
-        }}
         className="m-2"
         InputProps={{
           endAdornment: (
@@ -136,6 +120,7 @@ export default function EditData() {
           className="m-2"
           value={birth}
           onChange={(newValue) => {
+            console.log(newValue)
             setBirth(newValue);
           }}
           renderInput={(params) => <TextField {...params} />}

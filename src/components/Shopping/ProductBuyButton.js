@@ -46,7 +46,6 @@ export default function ProductBuyButton(props) {
       )
       .then((res) => {
         setLoading(false);
-        console.log(res.data);
         window.location.href = res.data;
       })
       .catch(() => {
