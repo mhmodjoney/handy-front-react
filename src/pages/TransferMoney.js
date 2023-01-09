@@ -8,7 +8,7 @@ import CurrencyInput from "react-currency-input-field";
 import ConfirmButton from "../components/MoneyTransfer/ConfirmButton";
 
 export default function TransferMoney() {
-  const [price, setPrice] = React.useState(0);
+  const [price, setPrice] = React.useState(0.01);
 
   return (
     <div>
@@ -29,7 +29,9 @@ export default function TransferMoney() {
         value={price}
         decimalsLimit={2}
         className="mx-auto my-4 p-3 d-table"
-        onValueChange={(value, name) => setPrice(value)}
+        onValueChange={(value, name) =>
+          setPrice(value <= 0 || !value ? 0.01 : value)
+        }
       />
       <ConfirmButton name="Tishreen University" price={price} />
       <Footer />

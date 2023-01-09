@@ -11,7 +11,7 @@ import { CircularProgress } from "@mui/material";
 
 export default function BillPayButton(props) {
   const [open, setOpen] = React.useState(false);
-  const [price, setPrice] = React.useState(0);
+  const [price, setPrice] = React.useState(0.01);
   const [billId, setBillId] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ export default function BillPayButton(props) {
           value={price}
           decimalsLimit={2}
           className="mx-auto my-2 p-3 d-table"
-          onValueChange={(value, name) => setPrice(value)}
+          onValueChange={(value, name) => setPrice(value <= 0 || !value ? 0.01 : value)}
         />
 
         <button className="btn btn-success m-2 dialog-btn" onClick={submit}>
