@@ -27,6 +27,7 @@ export default function ConfirmButton(props) {
         {
           product_id: 0,
           type: "transfer",
+          Quantity: 1,
           description: `transferd ${props.price}$ to ${props.name}`,
           amount: props.price * 100,
           name: props.name,

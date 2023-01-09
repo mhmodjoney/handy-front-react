@@ -30,11 +30,12 @@ export default function ProductBuyButton(props) {
         {
           product_id: product.id,
           type: "product",
+          Quantity: quantity,
           description: `Paid ${
             parseInt(quantity || "0") * product.price
           }$ on ${quantity} product${quantity > 1 ? "s" : ""} of ${
             product.title
-          } with a price of ${product.price} each`,
+          } with a price of ${product.price}$ each`,
           amount: product.price * 100,
           name: product.title,
         },

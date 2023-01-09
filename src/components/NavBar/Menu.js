@@ -46,6 +46,9 @@ export default function Menu() {
           <Link className="text-decoration-none" to="/money-transfer">
             <p className="mt-1 m-0 p-0 text-black">Money Transfer</p>
           </Link>
+          <Link className="text-decoration-none" to="/payment-history">
+            <p className="mt-1 m-0 p-0 text-black">Payment History</p>
+          </Link>
         </div>
       </Popover>
     </div>

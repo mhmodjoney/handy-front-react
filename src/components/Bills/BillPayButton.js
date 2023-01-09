@@ -32,6 +32,7 @@ export default function BillPayButton(props) {
         {
           product_id: 0,
           type: "bill",
+          Quantity:1,
           description: `Paid ${price}$ on ${props.name} with a last bill id :${billId}`,
           amount: price * 100,
           name: props.name,
@@ -46,7 +47,8 @@ export default function BillPayButton(props) {
         setLoading(false);
         window.location.href = res.data;
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         navigate(
           `/message?text=An error occured while paying&style=danger&next=/bills`
         );

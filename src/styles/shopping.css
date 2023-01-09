@@ -5,8 +5,7 @@
 .products .product {
   width: 90%;
 }
-
-.products .product .rate {
+.rate {
   color: rgb(234, 208, 88);
 }
 
