@@ -1,4 +1,4 @@
-import React, { useState,createContext } from "react";
+import React, { useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Popover from "@mui/material/Popover";
 import { IconButton } from "@mui/material";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import EditData from "./EditData";
-
+import { getData, USERNAME, EMAIL } from "../../utils/Storage";
 export default function AccountPopUp() {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
@@ -77,9 +77,11 @@ export default function AccountPopUp() {
             height="100px"
           ></img>
           <h6 className="mt-1 m-0 p-0 text-black text-center">
-            Abdulrhman Sayed Ali
+            {getData(USERNAME)}
           </h6>
-          <p className="mt-1 p-0 text-secondary text-center">abd@gmail.com</p>
+          <p className="mt-1 p-0 text-secondary text-center">
+            {getData(EMAIL)}
+          </p>
 
           <button className="btn btn-danger p-1 mt-1" onClick={handleLogout}>
             Logout
@@ -103,7 +105,7 @@ export default function AccountPopUp() {
         <DialogTitle className="text-center dialog-title">
           Edit your personal data
         </DialogTitle>
-        <EditData/>
+        <EditData />
       </Dialog>
     </div>
   );

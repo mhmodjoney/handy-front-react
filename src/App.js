@@ -23,6 +23,7 @@ import { Logout } from "./utils/Storage";
 import VerifyEmail from "./pages/VerifyEmail";
 import Message from "./pages/Message";
 import ForgotPassword from "./pages/ForgotPassword";
+import { ThemeProvider, createTheme } from "@mui/material";
 
 const checkToken = async () => {
   let res = null;
@@ -37,10 +38,10 @@ const checkToken = async () => {
       }
     )
     .then((response) => {
-      res = true;
+      res = [true, response];
     })
     .catch((error) => {
-      res = false;
+      res = [false, error.response];
     });
 
   return res;
@@ -49,6 +50,7 @@ const checkToken = async () => {
 export const LoggedInContext = createContext();
 
 function App() {
+  const defaultMaterialTheme = createTheme();
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -56,84 +58,87 @@ function App() {
     if (getData(TOKEN)) {
       checkToken().then((res) => {
         setLoading(false);
-        setLoggedIn(res);
-        if (!res) Logout();
+        setLoggedIn(res[0]);
+        console.log(res);
+        if (!res[0] && res[1].status === 400) Logout();
       });
     }
   }, []);
   return (
     <div className="App">
-      <LoggedInContext.Provider
-        value={{
-          loggedIn: loggedIn,
-        }}
-      >
-        {loading ? (
-          <Loading />
-        ) : (
-          <Routes>
-            <Route exact path="/" element={<Home />}></Route>
-            <Route exact path="/login" element={<Login />}></Route>
-            <Route exact path="/signup" element={<SignUp />}></Route>
-            <Route
-              exact
-              path="/forgotpassword/:uuid"
-              element={<ForgotPassword />}
-            ></Route>
-            <Route
-              exact
-              path="/verifyemail/:uuid"
-              element={<VerifyEmail />}
-            ></Route>
-            <Route exact path="/message" element={<Message />}></Route>
-            <Route
-              exact
-              path="/shopping"
-              element={
-                <Protected>
-                  <Shopping />
-                </Protected>
-              }
-            ></Route>
-            <Route
-              exact
-              path="/bills"
-              element={
-                <Protected>
-                  <Bills />
-                </Protected>
-              }
-            ></Route>
-            <Route
-              exact
-              path="/money-transfer"
-              element={
-                <Protected>
-                  <TransferMoney />
-                </Protected>
-              }
-            ></Route>
-            <Route
-              exact
-              path="/products/:categorey"
-              element={
-                <Protected>
-                  <Products />
-                </Protected>
-              }
-            ></Route>
-            <Route
-              exact
-              path="/payment-history"
-              element={
-                <Protected>
-                  <PaymentHistory />
-                </Protected>
-              }
-            ></Route>
-          </Routes>
-        )}
-      </LoggedInContext.Provider>
+      <ThemeProvider theme={defaultMaterialTheme}>
+        <LoggedInContext.Provider
+          value={{
+            loggedIn: loggedIn,
+          }}
+        >
+          {loading ? (
+            <Loading />
+          ) : (
+            <Routes>
+              <Route exact path="/" element={<Home />}></Route>
+              <Route exact path="/login" element={<Login />}></Route>
+              <Route exact path="/signup" element={<SignUp />}></Route>
+              <Route
+                exact
+                path="/forgotpassword/:uuid"
+                element={<ForgotPassword />}
+              ></Route>
+              <Route
+                exact
+                path="/verifyemail/:uuid"
+                element={<VerifyEmail />}
+              ></Route>
+              <Route exact path="/message" element={<Message />}></Route>
+              <Route
+                exact
+                path="/shopping"
+                element={
+                  <Protected>
+                    <Shopping />
+                  </Protected>
+                }
+              ></Route>
+              <Route
+                exact
+                path="/bills"
+                element={
+                  <Protected>
+                    <Bills />
+                  </Protected>
+                }
+              ></Route>
+              <Route
+                exact
+                path="/money-transfer"
+                element={
+                  <Protected>
+                    <TransferMoney />
+                  </Protected>
+                }
+              ></Route>
+              <Route
+                exact
+                path="/products/:categorey"
+                element={
+                  <Protected>
+                    <Products />
+                  </Protected>
+                }
+              ></Route>
+              <Route
+                exact
+                path="/payment-history"
+                element={
+                  <Protected>
+                    <PaymentHistory />
+                  </Protected>
+                }
+              ></Route>
+            </Routes>
+          )}
+        </LoggedInContext.Provider>
+      </ThemeProvider>
     </div>
   );
 }
