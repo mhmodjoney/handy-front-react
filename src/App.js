@@ -52,10 +52,11 @@ export const LoggedInContext = createContext();
 function App() {
   const defaultMaterialTheme = createTheme();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (getData(TOKEN)) {
+      setLoading(true);
       checkToken().then((res) => {
         setLoading(false);
         setLoggedIn(res[0]);
