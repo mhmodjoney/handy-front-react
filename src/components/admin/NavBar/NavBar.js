@@ -16,8 +16,8 @@ export default function NavBar(props) {
           alt="app icon"
         />
         <NavBarItem name="Users" route="/admin/users" selectedTab={props.selectedTab} />
-        <NavBarItem name="Payments" route="/admin/users" selectedTab={props.selectedTab} />
-        <NavBarItem name="Admins" route="/admin/users" selectedTab={props.selectedTab} />
+        <NavBarItem name="Payments" route="/admin/payments" selectedTab={props.selectedTab} />
+        <NavBarItem name="Admins" route="/admin/admins" selectedTab={props.selectedTab} />
       </div>
 
       <div className="d-flex align-items-center">

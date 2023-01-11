@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AdminUsers from "./pages/admin/AdminUsers";
+import AdminPayments from "./pages/admin/AdminPayments";
+import AdminAdmins from "./pages/admin/AdminAdmins";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Shopping from "./pages/Shopping";
@@ -164,7 +166,6 @@ function App() {
                     </Protected>
                   }
                 ></Route>
-
                 <Route
                   exact
                   path="/admin"
@@ -180,6 +181,24 @@ function App() {
                   element={
                     <AdminProtected>
                       <AdminUsers />
+                    </AdminProtected>
+                  }
+                ></Route>
+                <Route
+                  exact
+                  path="/admin/payments"
+                  element={
+                    <AdminProtected>
+                      <AdminPayments />
+                    </AdminProtected>
+                  }
+                ></Route>
+                <Route
+                  exact
+                  path="/admin/admins"
+                  element={
+                    <AdminProtected>
+                      <AdminAdmins />
                     </AdminProtected>
                   }
                 ></Route>
