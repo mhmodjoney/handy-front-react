@@ -1,12 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { useContext } from "react";
-import { LoggedInContext, AdminLoggedInContext } from "../App";
+import { LoggedInContext } from "../App";
+import { getData, TOKEN } from "../utils/Storage";
+
 const Protected = ({ children }) => {
   const { loggedIn } = useContext(LoggedInContext);
-  const { adminLoggedIn } = useContext(AdminLoggedInContext);
-  console.log(loggedIn);
-  console.log(adminLoggedIn);
-  if (!loggedIn) {
+  if (!loggedIn && !getData(TOKEN)) {
     return <Navigate to="/login" replace />;
   }
   return children;

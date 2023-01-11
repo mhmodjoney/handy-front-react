@@ -31,8 +31,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import Message from "./pages/Message";
 import ForgotPassword from "./pages/ForgotPassword";
 import { ThemeProvider, createTheme } from "@mui/material";
-import { Navigate } from "react-router-dom";
-import { HashRouter } from "react-router-dom";
+
 const checkToken = async (isAdmin) => {
   let res = null;
   await axios
@@ -66,14 +65,14 @@ function App() {
   const [loading2, setLoading2] = useState(false);
 
   const loading = loading1 || loading2;
-  console.log(getData(TOKEN));
   useEffect(() => {
+    console.log("Dfdf");
     if (getData(TOKEN)) {
       setLoading1(true);
       checkToken(false).then((res) => {
         setLoggedIn(res[0]);
         setLoading1(false);
-
+        console.log("Dfdf2");
         if (!res[0] && res[1].status === 400) Logout();
       });
     }
@@ -92,10 +91,10 @@ function App() {
 
   return (
     <div className="App">
-      <ThemeProvider theme={defaultMaterialTheme}>
-        {loading ? (
-          <Loading />
-        ) : (
+      {loading ? (
+        <Loading />
+      ) : (
+        <ThemeProvider theme={defaultMaterialTheme}>
           <LoggedInContext.Provider
             value={{
               loggedIn: loggedIn,
@@ -179,8 +178,8 @@ function App() {
               </Routes>
             </AdminLoggedInContext.Provider>
           </LoggedInContext.Provider>
-        )}
-      </ThemeProvider>
+        </ThemeProvider>
+      )}
     </div>
   );
 }

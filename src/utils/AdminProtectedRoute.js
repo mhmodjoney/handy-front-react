@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import {useContext} from "react";
-import {LoggedInContext,AdminLoggedInContext} from "../App"
-
+import { useContext } from "react";
+import { AdminLoggedInContext } from "../App";
+import { getData, ADMIN_TOKEN } from "../utils/Storage";
 const AdminProtected = ({ children }) => {
   const { adminLoggedIn } = useContext(AdminLoggedInContext);
-  if (!adminLoggedIn) {
+  if (!adminLoggedIn && !getData(ADMIN_TOKEN)) {
     return <Navigate to="/login?admin=true" replace />;
   }
   return children;
