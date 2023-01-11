@@ -1,6 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import AdminHome from "./pages/admin/Home";
+import AdminUsers from "./pages/admin/AdminUsers";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Shopping from "./pages/Shopping";
@@ -36,7 +36,8 @@ const checkToken = async (isAdmin) => {
   let res = null;
   await axios
     .post(
-      API_URL_ROOT + "/api/Auth/vladateToken",
+      API_URL_ROOT +
+        (isAdmin ? "/api/admins/vladateToken" : "/api/Auth/vladateToken"),
       {},
       {
         headers: {
@@ -66,13 +67,11 @@ function App() {
 
   const loading = loading1 || loading2;
   useEffect(() => {
-    console.log("Dfdf");
     if (getData(TOKEN)) {
       setLoading1(true);
       checkToken(false).then((res) => {
         setLoggedIn(res[0]);
         setLoading1(false);
-        console.log("Dfdf2");
         if (!res[0] && res[1].status === 400) Logout();
       });
     }
@@ -171,7 +170,16 @@ function App() {
                   path="/admin"
                   element={
                     <AdminProtected>
-                      <AdminHome />
+                      <Navigate to="/admin/users" />
+                    </AdminProtected>
+                  }
+                ></Route>
+                <Route
+                  exact
+                  path="/admin/users"
+                  element={
+                    <AdminProtected>
+                      <AdminUsers />
                     </AdminProtected>
                   }
                 ></Route>
