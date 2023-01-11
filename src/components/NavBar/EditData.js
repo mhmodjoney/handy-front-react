@@ -11,6 +11,7 @@ import {
   GENDER,
   getData,
   setData,
+  TOKEN,
 } from "../../utils/Storage";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -46,6 +47,10 @@ export default function EditData() {
         email: email,
         gender: gender,
         birthDate: birth._d,
+      },      {
+        headers: {
+          Authorization: getData(TOKEN),
+        },
       })
       .then((response) => {
         setLoading(false);
