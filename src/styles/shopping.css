@@ -1,0 +1,62 @@
+.categorey {
+  width: 90%;
+}
+
+.products .product {
+  width: 90%;
+}
+.rate {
+  color: rgb(234, 208, 88);
+}
+
+.shopping-header {
+  color: rgb(246, 185, 72);
+}
+
+@keyframes slide-up {
+  from {
+    position: relative;
+    top: 100px;
+  }
+  to {
+    position: relative;
+    top: 0px;
+  }
+}
+
+.categorey,
+.product {
+  overflow: hidden;
+  animation-name: slide-up;
+  animation-duration: 1.5s;
+}
+
+@keyframes slide-right {
+  from {
+    position: relative;
+    right: 100px;
+  }
+  to {
+    position: relative;
+    right: 0px;
+  }
+}
+
+.dialog-title {
+  animation-name: slide-right;
+  animation-duration: 1.5s;
+}
+
+@keyframes scale {
+  from {
+    scale: 0.4;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+.dialog-btn {
+  animation-name: scale;
+  animation-duration: 1.5s;
+}
