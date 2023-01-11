@@ -41,9 +41,6 @@ export default function AccountPopUp() {
     handleClickOpenDialog();
     handleClosePopover();
   };
-  const handleGoToAdmin = () => {
-    handleClosePopover();
-  };
 
   const popoverOpen = Boolean(anchorEl);
   const id = popoverOpen ? "account-popover" : undefined;
@@ -91,12 +88,6 @@ export default function AccountPopUp() {
             onClick={handleEditData}
           >
             edit data
-          </button>
-          <button
-            className="btn btn-secondary p-1 mt-1"
-            onClick={handleGoToAdmin}
-          >
-            go to admin
           </button>
         </div>
       </Popover>

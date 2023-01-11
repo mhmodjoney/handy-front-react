@@ -3,6 +3,12 @@ export const USERNAME = "username-key";
 export const EMAIL = "email-key";
 export const BIRTH = "birth-key";
 export const GENDER = "gender-key";
+export const ADMIN_TOKEN = "admin-token-key";
+export const ADMIN_USERNAME = "admin-username-key";
+export const ADMIN_EMAIL = "admin-email-key";
+export const ADMIN_BIRTH = "admin-birth-key";
+export const ADMIN_GENDER = "admin-gender-key";
+export const ADMIN_STATE = "admin-state-key";
 
 export const Login = (token, username, email, birth, gender) => {
   localStorage.setItem(TOKEN, token);
@@ -28,6 +34,21 @@ export const setData = (key, value) => {
   return localStorage.setItem(key, value);
 };
 
-export const isLoggedIn = () => {
-  return Boolean(getData(TOKEN));
+
+export const adminLogin = (token, username, email, birth, gender, state) => {
+  localStorage.setItem(ADMIN_TOKEN, token);
+  localStorage.setItem(ADMIN_USERNAME, username);
+  localStorage.setItem(ADMIN_EMAIL, email);
+  localStorage.setItem(ADMIN_BIRTH, birth);
+  localStorage.setItem(ADMIN_GENDER, gender);
+  localStorage.setItem(ADMIN_STATE, state);
+};
+
+export const adminLogout = () => {
+  localStorage.setItem(ADMIN_TOKEN, null);
+  localStorage.setItem(ADMIN_USERNAME, null);
+  localStorage.setItem(ADMIN_EMAIL, null);
+  localStorage.setItem(ADMIN_BIRTH, null);
+  localStorage.setItem(ADMIN_GENDER, null);
+  localStorage.setItem(ADMIN_STATE, null);
 };

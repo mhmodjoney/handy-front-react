@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import AdminHome from "./pages/admin/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Shopping from "./pages/Shopping";
@@ -16,16 +17,23 @@ import axios from "axios";
 import Products from "./pages/Products";
 import PaymentHistory from "./pages/PaymentHistory";
 import { API_URL_ROOT } from "./data/constants";
-import { getData, TOKEN } from "./utils/Storage";
+import {
+  getData,
+  TOKEN,
+  ADMIN_TOKEN,
+  Logout,
+  adminLogout,
+} from "./utils/Storage";
 import Protected from "./utils/ProtectedRoute";
+import AdminProtected from "./utils/AdminProtectedRoute";
 import Loading from "./components/Loading";
-import { Logout } from "./utils/Storage";
 import VerifyEmail from "./pages/VerifyEmail";
 import Message from "./pages/Message";
 import ForgotPassword from "./pages/ForgotPassword";
 import { ThemeProvider, createTheme } from "@mui/material";
-
-const checkToken = async () => {
+import { Navigate } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
+const checkToken = async (isAdmin) => {
   let res = null;
   await axios
     .post(
@@ -33,7 +41,7 @@ const checkToken = async () => {
       {},
       {
         headers: {
-          Authorization: getData(TOKEN),
+          Authorization: isAdmin ? getData(ADMIN_TOKEN) : getData(TOKEN),
         },
       }
     )
@@ -48,97 +56,130 @@ const checkToken = async () => {
 };
 
 export const LoggedInContext = createContext();
+export const AdminLoggedInContext = createContext();
 
 function App() {
   const defaultMaterialTheme = createTheme();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+  const [loading1, setLoading1] = useState(false);
+  const [loading2, setLoading2] = useState(false);
 
+  const loading = loading1 || loading2;
+  console.log(getData(TOKEN));
   useEffect(() => {
     if (getData(TOKEN)) {
-      setLoading(true);
-      checkToken().then((res) => {
-        setLoading(false);
+      setLoading1(true);
+      checkToken(false).then((res) => {
         setLoggedIn(res[0]);
-        console.log(res);
+        setLoading1(false);
+
         if (!res[0] && res[1].status === 400) Logout();
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (getData(ADMIN_TOKEN)) {
+      setLoading2(true);
+      checkToken(true).then((res) => {
+        setAdminLoggedIn(res[0]);
+        setLoading2(false);
+        if (!res[0] && res[1].status === 400) adminLogout();
+      });
+    }
+  }, []);
+
   return (
     <div className="App">
       <ThemeProvider theme={defaultMaterialTheme}>
-        <LoggedInContext.Provider
-          value={{
-            loggedIn: loggedIn,
-          }}
-        >
-          {loading ? (
-            <Loading />
-          ) : (
-            <Routes>
-              <Route exact path="/" element={<Home />}></Route>
-              <Route exact path="/login" element={<Login />}></Route>
-              <Route exact path="/signup" element={<SignUp />}></Route>
-              <Route
-                exact
-                path="/forgotpassword/:uuid"
-                element={<ForgotPassword />}
-              ></Route>
-              <Route
-                exact
-                path="/verifyemail/:uuid"
-                element={<VerifyEmail />}
-              ></Route>
-              <Route exact path="/message" element={<Message />}></Route>
-              <Route
-                exact
-                path="/shopping"
-                element={
-                  <Protected>
-                    <Shopping />
-                  </Protected>
-                }
-              ></Route>
-              <Route
-                exact
-                path="/bills"
-                element={
-                  <Protected>
-                    <Bills />
-                  </Protected>
-                }
-              ></Route>
-              <Route
-                exact
-                path="/money-transfer"
-                element={
-                  <Protected>
-                    <TransferMoney />
-                  </Protected>
-                }
-              ></Route>
-              <Route
-                exact
-                path="/products/:categorey"
-                element={
-                  <Protected>
-                    <Products />
-                  </Protected>
-                }
-              ></Route>
-              <Route
-                exact
-                path="/payment-history"
-                element={
-                  <Protected>
-                    <PaymentHistory />
-                  </Protected>
-                }
-              ></Route>
-            </Routes>
-          )}
-        </LoggedInContext.Provider>
+        {loading ? (
+          <Loading />
+        ) : (
+          <LoggedInContext.Provider
+            value={{
+              loggedIn: loggedIn,
+            }}
+          >
+            <AdminLoggedInContext.Provider
+              value={{
+                adminLoggedIn: adminLoggedIn,
+              }}
+            >
+              <Routes>
+                <Route exact path="/" element={<Home />}></Route>
+                <Route exact path="/login" element={<Login />}></Route>
+                <Route exact path="/signup" element={<SignUp />}></Route>
+                <Route
+                  exact
+                  path="/forgotpassword/:uuid"
+                  element={<ForgotPassword />}
+                ></Route>
+                <Route
+                  exact
+                  path="/verifyemail/:uuid"
+                  element={<VerifyEmail />}
+                ></Route>
+                <Route exact path="/message" element={<Message />}></Route>
+                <Route
+                  exact
+                  path="/shopping"
+                  element={
+                    <Protected>
+                      <Shopping />
+                    </Protected>
+                  }
+                ></Route>
+                <Route
+                  exact
+                  path="/bills"
+                  element={
+                    <Protected>
+                      <Bills />
+                    </Protected>
+                  }
+                ></Route>
+                <Route
+                  exact
+                  path="/money-transfer"
+                  element={
+                    <Protected>
+                      <TransferMoney />
+                    </Protected>
+                  }
+                ></Route>
+                <Route
+                  exact
+                  path="/products/:categorey"
+                  element={
+                    <Protected>
+                      <Products />
+                    </Protected>
+                  }
+                ></Route>
+                <Route
+                  exact
+                  path="/payment-history"
+                  element={
+                    <Protected>
+                      <PaymentHistory />
+                    </Protected>
+                  }
+                ></Route>
+
+                <Route
+                  exact
+                  path="/admin"
+                  element={
+                    <AdminProtected>
+                      <AdminHome />
+                    </AdminProtected>
+                  }
+                ></Route>
+              </Routes>
+            </AdminLoggedInContext.Provider>
+          </LoggedInContext.Provider>
+        )}
       </ThemeProvider>
     </div>
   );
