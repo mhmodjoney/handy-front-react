@@ -141,6 +141,8 @@ export default function PaymentHistory() {
                 filtering: filter,
                 exportButton: true,
                 exportAllData: true,
+                paginationType: "stepped",
+                columnsButton: true,
               }}
               title="Payment History"
             />

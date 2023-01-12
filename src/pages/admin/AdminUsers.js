@@ -104,7 +104,7 @@ export default function AdminUsers() {
                     verified: "Verified",
                     unverified: "Unverified",
                   },
-                  validate: (rowData) => myValidate(rowData.state)
+                  validate: (rowData) => myValidate(rowData.state),
                 },
               ]}
               data={data}
@@ -156,6 +156,8 @@ export default function AdminUsers() {
                 filtering: filter,
                 exportButton: true,
                 exportAllData: true,
+                paginationType: "stepped",
+                columnsButton: true,
               }}
               title="All Users"
             />
