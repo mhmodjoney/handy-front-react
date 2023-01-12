@@ -155,6 +155,7 @@ export default function AdminUsers() {
                 sorting: true,
                 filtering: filter,
                 exportButton: true,
+                exportAllData: true,
               }}
               title="All Users"
             />

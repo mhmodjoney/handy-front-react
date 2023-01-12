@@ -104,12 +104,15 @@ export default function PaymentHistory() {
                     "payment_intent.succeeded": "Succeeded",
                     unknown: "Failed",
                   },
-                  render: (rowData) =>
-                    rowData.state === "payment_intent.succeeded" ? (
+                  render: (rowData) => {
+                    console.log(rowData);
+                    return rowData.state === "payment_intent.succeeded" ||
+                      rowData === "Succeeded" ? (
                       <CheckCircleIcon className="text-success" />
                     ) : (
                       <CancelIcon className="text-danger" />
-                    ),
+                    );
+                  },
                 },
               ]}
               data={data}
@@ -137,6 +140,7 @@ export default function PaymentHistory() {
                 sorting: true,
                 filtering: filter,
                 exportButton: true,
+                exportAllData: true,
               }}
               title="Payment History"
             />
@@ -148,10 +152,9 @@ export default function PaymentHistory() {
               productId={productId}
             />
           ) : null}
-           <Footer />
+          <Footer />
         </>
       )}
-     
     </div>
   );
 }

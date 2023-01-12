@@ -155,6 +155,7 @@ export default function AdminAdmins() {
                 sorting: true,
                 filtering: filter,
                 exportButton: true,
+                exportAllData: true,
               }}
               title="All Admins"
             />
