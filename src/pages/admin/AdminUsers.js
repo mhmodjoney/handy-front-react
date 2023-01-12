@@ -10,6 +10,7 @@ import Loading from "../../components/Loading";
 import NavBar from "../../components/admin/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import moment from "moment";
+import { validateEmail } from "../../utils/utils";
 
 const manageData = (data) => {
   for (let i = 0; i < data.length; i++) {
@@ -30,6 +31,24 @@ const myValidate = (value) => {
         isValid: false,
         helperText: "this field is required",
       };
+};
+
+const EmailValidate = (value) => {
+  let valid = true;
+  if (value === null || value === undefined || value.trim() === "")
+    valid = false;
+  if (!valid)
+    return {
+      isValid: false,
+      helperText: "this field is required",
+    };
+
+  if (!validateEmail(value))
+    return {
+      isValid: false,
+      helperText: "pelase enter a valid email",
+    };
+  return true;
 };
 
 export default function AdminUsers() {
@@ -81,7 +100,7 @@ export default function AdminUsers() {
                 {
                   title: "Email",
                   field: "email",
-                  validate: (rowData) => myValidate(rowData.email),
+                  validate: (rowData) => EmailValidate(rowData.email),
                 },
                 {
                   title: "Gender",
