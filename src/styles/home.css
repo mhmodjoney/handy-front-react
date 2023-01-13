@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Rowdies&display=swap");
+header .logo {
+  font-family: "Rowdies", cursive;
+  font-size: 2.5rem;
+  color: rgb(218, 141, 0);
+}

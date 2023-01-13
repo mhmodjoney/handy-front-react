@@ -9,17 +9,7 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import Loading from "../../components/Loading";
 import NavBar from "../../components/admin/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
-import moment from "moment";
 import { validateEmail } from "../../utils/utils";
-
-const manageData = (data) => {
-  for (let i = 0; i < data.length; i++) {
-    let date = moment(data[i].birthDate).seconds(0).milliseconds(0);
-    data[i].birthDate = date._d.toDateString();
-  }
-
-  return data;
-};
 
 const myValidate = (value) => {
   let valid = true;
@@ -81,7 +71,7 @@ export default function AdminAdmins() {
       .then((res) => {
         setLoading(false);
         console.log(res.data);
-        setData(manageData(res.data));
+        setData(res.data);
       })
       .catch((err) => {
         setLoading(false);
@@ -130,6 +120,8 @@ export default function AdminAdmins() {
                 {
                   title: "Birth Date",
                   field: "birthDate",
+                  type: "date",
+                  filtering: true,
                   validate: (rowData) => myValidate(rowData.birthDate),
                 },
                 {
@@ -191,7 +183,7 @@ export default function AdminAdmins() {
                     })
                     .catch((err) => {
                       navigate(
-                        "/message?text=Unknown error happened&style=danger&next/admin/admins"
+                        "/message?text=Unknown error happened&style=danger&next=/admin/admins"
                       );
                     }),
                 onRowDelete: (oldData) =>

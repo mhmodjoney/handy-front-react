@@ -25,7 +25,6 @@ const manageData = (data) => {
     data[i].email = data[i].customer.email;
 
     let date = moment(data[i].date).seconds(0).milliseconds(0);
-    data[i].date = date._d.toDateString();
     data[i].time = date._d.toLocaleTimeString();
   }
 
@@ -81,7 +80,7 @@ export default function AdminPayments() {
                 { title: "Email", field: "email" },
                 { title: "Name", field: "name" },
                 { title: "Description", field: "description" },
-                { title: "Date", field: "date" },
+                { title: "Date", field: "date", type: "date" },
                 { title: "Time", field: "time" },
                 { title: "Quantity", field: "quantity" },
                 {

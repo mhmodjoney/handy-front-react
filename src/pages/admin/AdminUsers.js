@@ -9,16 +9,6 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import Loading from "../../components/Loading";
 import NavBar from "../../components/admin/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
-import moment from "moment";
-
-const manageData = (data) => {
-  for (let i = 0; i < data.length; i++) {
-    let date = moment(data[i].birthDate).seconds(0).milliseconds(0);
-    data[i].birthDate = date._d.toDateString();
-  }
-
-  return data;
-};
 
 const myValidate = (value) => {
   let valid = true;
@@ -50,7 +40,7 @@ export default function AdminUsers() {
       })
       .then((res) => {
         setLoading(false);
-        setData(manageData(res.data));
+        setData(res.data);
       })
       .catch((err) => {
         setLoading(false);
@@ -99,6 +89,7 @@ export default function AdminUsers() {
                 {
                   title: "Birth Date",
                   field: "birthDate",
+                  type: "date",
                   validate: (rowData) => myValidate(rowData.birthDate),
                 },
                 {
@@ -124,11 +115,15 @@ export default function AdminUsers() {
               editable={{
                 onRowUpdate: (newData, oldData) =>
                   axios
-                    .put(`${API_URL_ROOT}/api/AdminUtilities/customer`, newData, {
-                      headers: {
-                        Authorization: getData(ADMIN_TOKEN),
-                      },
-                    })
+                    .put(
+                      `${API_URL_ROOT}/api/AdminUtilities/customer`,
+                      newData,
+                      {
+                        headers: {
+                          Authorization: getData(ADMIN_TOKEN),
+                        },
+                      }
+                    )
                     .then((res) => {
                       loadData();
                     })
@@ -139,11 +134,14 @@ export default function AdminUsers() {
                     }),
                 onRowDelete: (oldData) =>
                   axios
-                    .delete(`${API_URL_ROOT}/api/AdminUtilities/customer${oldData.id}`, {
-                      headers: {
-                        Authorization: getData(ADMIN_TOKEN),
-                      },
-                    })
+                    .delete(
+                      `${API_URL_ROOT}/api/AdminUtilities/customer${oldData.id}`,
+                      {
+                        headers: {
+                          Authorization: getData(ADMIN_TOKEN),
+                        },
+                      }
+                    )
                     .then((res) => {
                       loadData();
                     })

@@ -22,7 +22,6 @@ const manageData = (data) => {
     data[i].amount = `${data[i].amount}$`;
     data[i].total_amount = `${data[i].total_amount}$`;
     let date = moment(data[i].date).seconds(0).milliseconds(0);
-    data[i].date = date._d.toDateString();
     data[i].time = date._d.toLocaleTimeString();
   }
 
@@ -75,7 +74,7 @@ export default function PaymentHistory() {
               columns={[
                 { title: "Name", field: "name" },
                 { title: "Description", field: "description" },
-                { title: "Date", field: "date" },
+                { title: "Date", field: "date", type: "date" },
                 { title: "Time", field: "time" },
                 { title: "Quantity", field: "quantity" },
                 {

@@ -49,7 +49,8 @@ export default function ProductBuyButton(props) {
         setLoading(false);
         window.location.href = res.data;
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         navigate(
           `/message?text=An error occured while paying&style=danger&next=/products/${product.category}`
         );
