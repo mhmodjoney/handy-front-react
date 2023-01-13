@@ -59,22 +59,38 @@ export default function AdminAdmins() {
 
   const isSuperAdmin = getData(ADMIN_STATE) === "superadmin";
 
-  useEffect(() => {
+  const validateAllData = (rowData) => {
+    let valid = true;
+    valid &= myValidate(rowData.name);
+    valid &= myValidate(rowData.gender);
+    valid &= myValidate(rowData.birthDate);
+    valid &= myValidate(rowData.state);
+    valid &= myValidate(rowData.password);
+    valid &= EmailValidate(rowData.email);
+    return valid;
+  };
+
+  const loadData = () => {
     setLoading(true);
     axios
-      .get(`${API_URL_ROOT}/api/customer`, {
+      .get(`${API_URL_ROOT}/api/Admins`, {
         headers: {
           Authorization: getData(ADMIN_TOKEN),
         },
       })
       .then((res) => {
         setLoading(false);
+        console.log(res.data);
         setData(manageData(res.data));
       })
       .catch((err) => {
         setLoading(false);
         navigate("/message?text=Failed to load&style=danger&next=/admin");
       });
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   if (!isSuperAdmin)
@@ -120,10 +136,15 @@ export default function AdminAdmins() {
                   title: "State",
                   field: "state",
                   lookup: {
-                    verified: "Verified",
-                    unverified: "Unverified",
+                    superadmin: "Super Admin",
+                    admin: "Admin",
                   },
                   validate: (rowData) => myValidate(rowData.state),
+                },
+                {
+                  title: "Password",
+                  field: "password",
+                  validate: (rowData) => myValidate(rowData.password),
                 },
               ]}
               data={data}
@@ -138,36 +159,56 @@ export default function AdminAdmins() {
               ]}
               editable={{
                 onRowAdd: (newData) =>
-                  new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      setData([...data, newData]);
-
-                      resolve();
-                    }, 1000);
-                  }),
+                  validateAllData(newData)
+                    ? axios
+                        .post(`${API_URL_ROOT}/api/Admins`, newData, {
+                          headers: {
+                            Authorization: getData(ADMIN_TOKEN),
+                          },
+                        })
+                        .then((res) => {
+                          loadData();
+                        })
+                        .catch((err) => {
+                          navigate(
+                            "/message?text=Unknown error happened&style=danger&next=/admin/admins"
+                          );
+                        })
+                    : new Promise((resolve, reject) => {
+                        navigate(
+                          "/message?text=Enter a valid data&style=danger&next=/admin/admins"
+                        );
+                      }),
                 onRowUpdate: (newData, oldData) =>
-                  new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      const dataUpdate = [...data];
-                      console.log(oldData);
-                      const index = oldData.tableData.id;
-                      dataUpdate[index] = newData;
-                      setData([...dataUpdate]);
-
-                      resolve();
-                    }, 1000);
-                  }),
+                  axios
+                    .put(`${API_URL_ROOT}/api/Admins/${oldData.id}`, newData, {
+                      headers: {
+                        Authorization: getData(ADMIN_TOKEN),
+                      },
+                    })
+                    .then((res) => {
+                      loadData();
+                    })
+                    .catch((err) => {
+                      navigate(
+                        "/message?text=Unknown error happened&style=danger&next/admin/admins"
+                      );
+                    }),
                 onRowDelete: (oldData) =>
-                  new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      const dataDelete = [...data];
-                      const index = oldData.tableData.id;
-                      dataDelete.splice(index, 1);
-                      setData([...dataDelete]);
-
-                      resolve();
-                    }, 1000);
-                  }),
+                  axios
+                    .delete(`${API_URL_ROOT}/api/Admins/${oldData.id}`, {
+                      headers: {
+                        Authorization: getData(ADMIN_TOKEN),
+                      },
+                    })
+                    .then((res) => {
+                      loadData();
+                    })
+                    .catch((err) => {
+                      navigate(
+                        "/message?text=Unknown error happened&style=danger&next=/admin/admins"
+                      );
+                    }),
               }}
               options={{
                 grouping: true,

@@ -105,7 +105,6 @@ export default function PaymentHistory() {
                     unknown: "Failed",
                   },
                   render: (rowData) => {
-                    console.log(rowData);
                     return rowData.state === "payment_intent.succeeded" ||
                       rowData === "Succeeded" ? (
                       <CheckCircleIcon className="text-success" />

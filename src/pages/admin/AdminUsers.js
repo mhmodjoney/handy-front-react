@@ -10,7 +10,6 @@ import Loading from "../../components/Loading";
 import NavBar from "../../components/admin/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import moment from "moment";
-import { validateEmail } from "../../utils/utils";
 
 const manageData = (data) => {
   for (let i = 0; i < data.length; i++) {
@@ -33,24 +32,6 @@ const myValidate = (value) => {
       };
 };
 
-const EmailValidate = (value) => {
-  let valid = true;
-  if (value === null || value === undefined || value.trim() === "")
-    valid = false;
-  if (!valid)
-    return {
-      isValid: false,
-      helperText: "this field is required",
-    };
-
-  if (!validateEmail(value))
-    return {
-      isValid: false,
-      helperText: "pelase enter a valid email",
-    };
-  return true;
-};
-
 export default function AdminUsers() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -59,7 +40,7 @@ export default function AdminUsers() {
 
   const isSuperAdmin = getData(ADMIN_STATE) === "superadmin";
 
-  useEffect(() => {
+  const loadData = () => {
     setLoading(true);
     axios
       .get(`${API_URL_ROOT}/api/customer`, {
@@ -75,6 +56,10 @@ export default function AdminUsers() {
         setLoading(false);
         navigate("/message?text=Failed to load&style=danger&next=/admin");
       });
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   if (!isSuperAdmin)
@@ -100,7 +85,7 @@ export default function AdminUsers() {
                 {
                   title: "Email",
                   field: "email",
-                  validate: (rowData) => EmailValidate(rowData.email),
+                  editable: false,
                 },
                 {
                   title: "Gender",
@@ -137,37 +122,36 @@ export default function AdminUsers() {
                 },
               ]}
               editable={{
-                onRowAdd: (newData) =>
-                  new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      setData([...data, newData]);
-
-                      resolve();
-                    }, 1000);
-                  }),
                 onRowUpdate: (newData, oldData) =>
-                  new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      const dataUpdate = [...data];
-                      console.log(oldData);
-                      const index = oldData.tableData.id;
-                      dataUpdate[index] = newData;
-                      setData([...dataUpdate]);
-
-                      resolve();
-                    }, 1000);
-                  }),
+                  axios
+                    .put(`${API_URL_ROOT}/api/AdminUtilities/customer`, newData, {
+                      headers: {
+                        Authorization: getData(ADMIN_TOKEN),
+                      },
+                    })
+                    .then((res) => {
+                      loadData();
+                    })
+                    .catch((err) => {
+                      navigate(
+                        "/message?text=Unknown error happened&style=danger&next=/admin/users"
+                      );
+                    }),
                 onRowDelete: (oldData) =>
-                  new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      const dataDelete = [...data];
-                      const index = oldData.tableData.id;
-                      dataDelete.splice(index, 1);
-                      setData([...dataDelete]);
-
-                      resolve();
-                    }, 1000);
-                  }),
+                  axios
+                    .delete(`${API_URL_ROOT}/api/AdminUtilities/customer${oldData.id}`, {
+                      headers: {
+                        Authorization: getData(ADMIN_TOKEN),
+                      },
+                    })
+                    .then((res) => {
+                      loadData();
+                    })
+                    .catch((err) => {
+                      navigate(
+                        "/message?text=Unknown error happened&style=danger&next=/admin/users"
+                      );
+                    }),
               }}
               options={{
                 grouping: true,
