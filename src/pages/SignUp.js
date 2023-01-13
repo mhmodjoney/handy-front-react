@@ -241,34 +241,6 @@ export default function SignUp() {
           <Link to="/login" className="align-self-start text-decoration-none">
             already have an account?
           </Link>
-          <Link
-            className="align-self-start text-decoration-none"
-            onClick={() => {
-              if (!validateEmail(email)) {
-                setEmailError(true);
-                return;
-              }
-              setEmailError(false);
-              setEmailUsedError(false);
-              setLoading(true);
-              axios
-                .post(`${API_URL_ROOT}/api/Auth/forgotPass`, { email: email })
-                .then(() => {
-                  setLoading(false);
-                  navigate(
-                    "/message?text=We sent to your email a link to change your password&style=success"
-                  );
-                })
-                .catch(() => {
-                  setLoading(false);
-                  navigate(
-                    "/message?text=An error occurred while trying to send you a change password link&style=danger"
-                  );
-                });
-            }}
-          >
-            Forgot your password?
-          </Link>
           <button
             className="btn btn-dark m-2"
             onClick={loading ? null : submit}

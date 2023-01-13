@@ -136,6 +136,34 @@ export default function Login() {
           <Link to="/signup" className="align-self-start text-decoration-none">
             new to Handy?
           </Link>
+
+          <Link
+            className="align-self-start text-decoration-none"
+            onClick={() => {
+              if (!validateEmail(email)) {
+                setEmailError(true);
+                return;
+              }
+              setEmailError(false);
+              setLoading(true);
+              axios
+                .post(`${API_URL_ROOT}/api/Auth/forgotPass`, { email: email })
+                .then(() => {
+                  setLoading(false);
+                  navigate(
+                    "/message?text=We sent to your email a link to change your password&style=success"
+                  );
+                })
+                .catch(() => {
+                  setLoading(false);
+                  navigate(
+                    "/message?text=An error occurred while trying to send you a change password link&style=danger"
+                  );
+                });
+            }}
+          >
+            Forgot your password?
+          </Link>
           {loginError ? (
             <p className="text-danger m-0 p-0 mt-2">invalid login</p>
           ) : null}
