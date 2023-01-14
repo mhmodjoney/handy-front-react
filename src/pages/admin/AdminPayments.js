@@ -29,7 +29,7 @@ const manageData = (data) => {
     data[i].email = data[i].customer.email;
 
     let date = moment(data[i].date).seconds(0).milliseconds(0);
-    data.date = ParseDate(date);
+    data[i].date = ParseDate(date);
     data[i].time = date._d.toLocaleTimeString();
   }
 
