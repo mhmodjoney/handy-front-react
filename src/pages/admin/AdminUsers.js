@@ -9,7 +9,8 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import Loading from "../../components/Loading";
 import NavBar from "../../components/admin/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
-
+import { ParseDate } from "../../utils/utils";
+import moment from "moment";
 const myValidate = (value) => {
   let valid = true;
   if (value === null || value === undefined || value.trim() === "")
@@ -20,6 +21,16 @@ const myValidate = (value) => {
         isValid: false,
         helperText: "this field is required",
       };
+};
+
+const manageData = (data) => {
+  for (let i = 0; i < data.length; i++) {
+    data[i].order = i + 1;
+    let date = moment(data[i].birthDate).seconds(0).milliseconds(0);
+    data[i].birthDate = ParseDate(date);
+  }
+
+  return data;
 };
 
 export default function AdminUsers() {
@@ -40,7 +51,7 @@ export default function AdminUsers() {
       })
       .then((res) => {
         setLoading(false);
-        setData(res.data);
+        setData(manageData(res.data));
       })
       .catch((err) => {
         setLoading(false);
@@ -67,6 +78,7 @@ export default function AdminUsers() {
           <div className="container mt-3">
             <MyMaterialTable
               columns={[
+                { title: "Order", field: "order", editable: "Never" },
                 {
                   title: "Name",
                   field: "name",
@@ -89,7 +101,6 @@ export default function AdminUsers() {
                 {
                   title: "Birth Date",
                   field: "birthDate",
-                  type: "date",
                   validate: (rowData) => myValidate(rowData.birthDate),
                 },
                 {

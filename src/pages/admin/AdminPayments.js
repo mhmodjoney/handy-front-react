@@ -14,9 +14,13 @@ import ProductDialog from "../../components/ProductDialog";
 import Loading from "../../components/Loading";
 import NavBar from "../../components/admin/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { ParseDate } from "../../utils/utils";
 
 const manageData = (data) => {
   for (let i = 0; i < data.length; i++) {
+    data[i].order = i + 1;
     data[i].amount /= 100;
     data[i].total_amount = data[i].amount * data[i].quantity;
     data[i].amount = `${data[i].amount}$`;
@@ -25,6 +29,7 @@ const manageData = (data) => {
     data[i].email = data[i].customer.email;
 
     let date = moment(data[i].date).seconds(0).milliseconds(0);
+    data.date = ParseDate(date);
     data[i].time = date._d.toLocaleTimeString();
   }
 
@@ -38,7 +43,7 @@ export default function AdminPayments() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [productId, setProductId] = useState(0);
   const [loading, setLoading] = useState(false);
-
+  const [showOrder, setShowOrder] = useState(false);
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
@@ -74,13 +79,32 @@ export default function AdminPayments() {
       ) : (
         <>
           <div className="container mt-3">
+            <FormControlLabel
+              className="align-self-start"
+              control={
+                <Checkbox
+                  value={showOrder}
+                  onChange={() => {
+                    setShowOrder(!showOrder);
+                  }}
+                />
+              }
+              label="Show order"
+            />
+
             <MyMaterialTable
               columns={[
+                {
+                  title: "Order",
+                  field: "order",
+                  editable: "Never",
+                  hidden: !showOrder,
+                },
                 { title: "User Name", field: "username" },
                 { title: "Email", field: "email" },
                 { title: "Name", field: "name" },
                 { title: "Description", field: "description" },
-                { title: "Date", field: "date", type: "date" },
+                { title: "Date", field: "date" },
                 { title: "Time", field: "time" },
                 { title: "Quantity", field: "quantity" },
                 {

@@ -14,15 +14,18 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ProductDialog from "../components/ProductDialog";
 import Loading from "../components/Loading";
+import { ParseDate } from "../utils/utils";
 
 const manageData = (data) => {
   for (let i = 0; i < data.length; i++) {
+    data[i].order = i + 1;
     data[i].amount /= 100;
     data[i].total_amount = data[i].amount * data[i].quantity;
     data[i].amount = `${data[i].amount}$`;
     data[i].total_amount = `${data[i].total_amount}$`;
     let date = moment(data[i].date).seconds(0).milliseconds(0);
     data[i].time = date._d.toLocaleTimeString();
+    data[i].date = ParseDate(date);
   }
 
   return data;
@@ -72,9 +75,10 @@ export default function PaymentHistory() {
           <div className="container mt-3">
             <MyMaterialTable
               columns={[
+                { title: "Order", field: "order", editable: "Never" },
                 { title: "Name", field: "name" },
                 { title: "Description", field: "description" },
-                { title: "Date", field: "date", type: "date" },
+                { title: "Date", field: "date" },
                 { title: "Time", field: "time" },
                 { title: "Quantity", field: "quantity" },
                 {
