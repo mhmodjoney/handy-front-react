@@ -7,7 +7,7 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <header>
-      <h3 className="logo">Handy</h3>
+      <h3 className="logo"></h3>
       <div className="btn-try">
         {loggedIn ? null : (
           <button

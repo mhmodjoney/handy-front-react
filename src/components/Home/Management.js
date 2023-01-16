@@ -13,7 +13,7 @@ const Management = () => {
                             <div className="right-side">
                                 <h3>{managment.title}</h3>
                                 <p>{managment.description}</p>
-                                <button>Learn more</button>
+                                {/* <button>Learn more</button> */}
                             </div>
                         </div>
                     )}

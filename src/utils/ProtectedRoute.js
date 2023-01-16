@@ -5,9 +5,9 @@ import { getData, TOKEN } from "../utils/Storage";
 
 const Protected = ({ children }) => {
   const { loggedIn } = useContext(LoggedInContext);
-  if (!loggedIn && (getData(TOKEN)==="null"||!getData(TOKEN))) {
-    return <Navigate to="/login" replace />;
-  }
+  // if (!loggedIn && (getData(TOKEN)==="null"||!getData(TOKEN))) {
+  //   return <Navigate to="/login" replace />;
+  // }
   return children;
 };
 export default Protected;

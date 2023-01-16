@@ -51,6 +51,7 @@ export default function AdminUsers() {
       })
       .then((res) => {
         setLoading(false);
+        
         setData(manageData(res.data));
       })
       .catch((err) => {
@@ -146,7 +147,7 @@ export default function AdminUsers() {
                 onRowDelete: (oldData) =>
                   axios
                     .delete(
-                      `${API_URL_ROOT}/api/AdminUtilities/customer${oldData.id}`,
+                      `${API_URL_ROOT}/api/customer/${oldData.id}`,
                       {
                         headers: {
                           Authorization: getData(ADMIN_TOKEN),

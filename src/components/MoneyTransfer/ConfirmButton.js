@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import axios from "axios";
@@ -6,15 +6,20 @@ import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { API_URL_ROOT } from "../../data/constants";
 import { getData, TOKEN } from "../../utils/Storage";
+import { LoggedInContext } from "../../App";
 export default function ConfirmButton(props) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const { loggedIn } = useContext(LoggedInContext);
+
   const navigate = useNavigate();
 
   const handleClickOpen = () => {
+    if (!loggedIn && (getData(TOKEN) === "null" || !getData(TOKEN))) {
+      navigate("/login");
+    }
     setOpen(true);
   };
-
   const handleClose = (value) => {
     setOpen(false);
   };
@@ -56,7 +61,7 @@ export default function ConfirmButton(props) {
         className="btn btn-success mx-auto my-4 p-3 d-table"
         onClick={handleClickOpen}
       >
-        Pay
+        Submit
       </button>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle className="text-center dialog-title">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
@@ -6,7 +6,8 @@ import axios from "axios";
 import { API_URL_ROOT } from "../../data/constants";
 import { getData, TOKEN } from "../../utils/Storage";
 import { CircularProgress } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { LoggedInContext } from "../../App";
 
 export default function ProductBuyButton(props) {
   const product = props.product;
@@ -14,8 +15,12 @@ export default function ProductBuyButton(props) {
   const [quantity, setQuantity] = React.useState("1");
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
+  const { loggedIn } = useContext(LoggedInContext);
+
   const handleClickOpen = () => {
-    setOpen(true);
+    if (!loggedIn && (getData(TOKEN) === "null" || !getData(TOKEN))) {
+      navigate("/login");
+    } else setOpen(true);
   };
 
   const handleClose = (value) => {

@@ -71,7 +71,7 @@ export default function SignUp() {
         email: email,
         password: password,
         gender: gender,
-        birthDate: birth.d,
+        birthDate: birth._d,
       })
       .then((response) => {
         setLoading(false);

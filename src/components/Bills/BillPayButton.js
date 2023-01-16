@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import CurrencyInput from "react-currency-input-field";
@@ -8,15 +8,21 @@ import { getData, TOKEN } from "../../utils/Storage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import { LoggedInContext } from "../../App";
 
 export default function BillPayButton(props) {
   const [open, setOpen] = React.useState(false);
   const [price, setPrice] = React.useState(0.01);
   const [billId, setBillId] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const { loggedIn } = useContext(LoggedInContext);
+
   const navigate = useNavigate();
 
   const handleClickOpen = () => {
+    if (!loggedIn && (getData(TOKEN) === "null" || !getData(TOKEN))) {
+      navigate("/login");
+    }
     setOpen(true);
   };
 
@@ -32,7 +38,7 @@ export default function BillPayButton(props) {
         {
           product_id: 0,
           type: "bill",
-          Quantity:1,
+          Quantity: 1,
           description: `Paid ${price}$ on ${props.name} with a last bill id :${billId}`,
           amount: price * 100,
           name: props.name,
@@ -48,7 +54,7 @@ export default function BillPayButton(props) {
         window.location.href = res.data;
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         navigate(
           `/message?text=An error occured while paying&style=danger&next=/bills`
         );
@@ -59,7 +65,7 @@ export default function BillPayButton(props) {
   return (
     <div className="mx-auto">
       <button onClick={handleClickOpen} className="btn btn-success">
-        pay
+        Submit
       </button>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle className="text-center dialog-title">
@@ -93,7 +99,9 @@ export default function BillPayButton(props) {
           value={price}
           decimalsLimit={2}
           className="mx-auto my-2 p-3 d-table"
-          onValueChange={(value, name) => setPrice(value <= 0 || !value ? 0.01 : value)}
+          onValueChange={(value, name) =>
+            setPrice(value <= 0 || !value ? 0.01 : value)
+          }
         />
 
         <button className="btn btn-success m-2 dialog-btn" onClick={submit}>
