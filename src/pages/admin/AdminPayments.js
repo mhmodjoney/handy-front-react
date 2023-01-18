@@ -120,7 +120,6 @@ export default function AdminPayments() {
                 {
                   title: "Type",
                   field: "type",
-                  hiddenByColumnsButton: true,
                   lookup: {
                     product: "Product",
                     bill: "Bill",
@@ -141,6 +140,13 @@ export default function AdminPayments() {
                     ) : (
                       <CancelIcon className="text-danger" />
                     );
+                  },
+                },
+                {
+                  title: "Payment Method",
+                  field: "payment_method",
+                  lookup: {
+                    "Stripe/Card": "Stripe/Card",
                   },
                 },
               ]}

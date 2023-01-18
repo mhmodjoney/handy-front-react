@@ -116,6 +116,13 @@ export default function PaymentHistory() {
                     );
                   },
                 },
+                {
+                  title: "Payment Method",
+                  field: "payment_method",
+                  lookup: {
+                    "Stripe/Card": "Stripe/Card",
+                  },
+                },
               ]}
               data={data}
               actions={[
