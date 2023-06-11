@@ -6,11 +6,11 @@
   width: 90%;
 }
 .rate {
-  color: rgb(234, 208, 88);
+  color: #673AB7;
 }
 
 .shopping-header {
-  color: rgb(246, 185, 72);
+  color: #673AB7;
 }
 
 @keyframes slide-up {

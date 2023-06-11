@@ -32,13 +32,13 @@ header .btn-try button {
   padding: 10px 30px;
   background-color: transparent;
   outline: none;
-  border: 1px solid rgb(218, 141, 0);
+  border: 1px solid #673AB7;
   font-weight: bold;
   font-size: 20px;
   letter-spacing: 0.05em;
   line-height: 27px;
   text-align: left;
-  color: rgb(218, 141, 0);
+  color: #673AB7;
   border-radius: 40px;
   cursor: pointer;
 }
@@ -119,7 +119,7 @@ header .btn-try button {
   background-color: transparent;
   outline: none;
   border: none;
-  background: rgb(218, 141, 0);
+  background: #673AB7;
   font-weight: 500;
   font-size: 17px;
   letter-spacing: 0.05em;
@@ -313,7 +313,7 @@ header .btn-try button {
 .management .content-management .item .right-side button {
   padding: 15px 40px;
   border-radius: 30px;
-  background: rgb(218, 141, 0);
+  background: #673AB7;
   outline: none;
   border: none;
   cursor: pointer;
@@ -439,7 +439,7 @@ footer .form-group button {
   background-color: transparent;
   outline: none;
   border: none;
-  background: rgb(218, 141, 0);
+  background: #673AB7;
   font-weight: 500;
   font-size: 17px;
   letter-spacing: 0.05em;

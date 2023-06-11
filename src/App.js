@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Shopping from "./pages/Shopping";
 import Bills from "./pages/Bills";
-import TransferMoney from "./pages/TransferMoney";
+
 import "./styles/navbar.css";
 import "./styles/coming-soon.css";
 import "./styles/login.css";
@@ -143,15 +143,7 @@ function App() {
                     </Protected>
                   }
                 ></Route>
-                <Route
-                  exact
-                  path="/money-transfer"
-                  element={
-                    <Protected>
-                      <TransferMoney />
-                    </Protected>
-                  }
-                ></Route>
+              
                 <Route
                   exact
                   path="/products/:categorey"

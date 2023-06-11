@@ -29,12 +29,7 @@ export default function NavBar(props) {
           hideOnSmall={true}
           selectedTab={props.selectedTab}
         />
-        <NavBarItem
-          name="Money Transfer"
-          route="/money-transfer"
-          hideOnSmall={true}
-          selectedTab={props.selectedTab}
-        />
+      
         {loggedIn ? (
           <NavBarItem
             name="Payment History"

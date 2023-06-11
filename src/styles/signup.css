@@ -1,9 +1,9 @@
 .signup {
-  background: rgb(246, 139, 25);
+  background: #673AB7;
   background: linear-gradient(
     90deg,
-    rgba(246, 139, 25, 1) 0%,
-    rgba(230, 176, 101, 1) 100%
+    #704baf 0%,
+    rgb(156, 88, 153) 100%
   );
   width: 100vw;
   height: 100vh;

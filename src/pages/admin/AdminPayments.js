@@ -117,15 +117,7 @@ export default function AdminPayments() {
                   field: "total_amount",
                   type: "numeric",
                 },
-                {
-                  title: "Type",
-                  field: "type",
-                  lookup: {
-                    product: "Product",
-                    bill: "Bill",
-                    transfer: "Money Transfer",
-                  },
-                },
+           
                 {
                   title: "State",
                   field: "state",
