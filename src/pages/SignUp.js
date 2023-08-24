@@ -179,11 +179,15 @@ export default function SignUp() {
               value={password}
               className="m-2"
               error={PasswordError ? true : false}
-              helperText={
-                PasswordError
-                  ? "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one symbo"
-                  : ""
-              }
+           helperText={
+    PasswordError
+      ? (
+        <div style={{ whiteSpace: 'pre-line' }}>
+          Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one symbol.
+        </div>
+      )
+      : ""
+  }
               type={showPassword ? "text" : "password"}
               onChange={(event) => {
                 setPassword(event.target.value);
