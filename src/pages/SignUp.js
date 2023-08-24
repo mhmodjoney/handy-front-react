@@ -181,7 +181,7 @@ export default function SignUp() {
               error={PasswordError ? true : false}
               helperText={
                 PasswordError
-                  ? "Password must be at least 12 letters and numbers"
+                  ? "Password must be at least 8 letters and numbers"
                   : ""
               }
               type={showPassword ? "text" : "password"}
