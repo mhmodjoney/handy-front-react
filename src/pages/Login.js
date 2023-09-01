@@ -72,15 +72,10 @@ export default function Login() {
 
   const submit = () => {
     currentDate = new Date();
-    var lastdatestr=getData(DATE_WRONG)
-    var lastdate= new Date(lastdatestr)        
-   console.log("befor")
-   console.log( lastdate)  
-   console.log( currentDate)
-   
+    const lastdatestr=getData(DATE_WRONG)
+    const lastdate= new Date(lastdatestr)        
    if(lastdate!=null && lastdate>currentDate){
-    setData(loginerr,'you cant submit for'+ (Math.floor((lastdate - currentDate) / 1000 ))+' sec')
-    console.log("dd")
+    setData(loginerr,'you cant submit for 30 sec')
     setLoginError(true)
     return
    }
@@ -139,11 +134,9 @@ export default function Login() {
          var addedtrys =(parseInt(loctrys)+1).toString()
          setData(Trys,addedtrys)
           if( addedtrys>=3 && addedtrys<4){
-            setData(loginerr,"you tried 3 times you cant submit for "+(Math.floor((lastdate - currentDate) / 1000 ))+" sec ");
-            console.log("iii")
+            setData(loginerr,"you tried 3 times you cant submit for 30 sec ");
             // handleOtherButtonClick()
             currentDate.setSeconds(currentDate.getSeconds() + 30);
-            console.log(currentDate)
            setData(DATE_WRONG,currentDate)
           }
           else if(addedtrys>=5){
@@ -155,12 +148,11 @@ export default function Login() {
                 email: email,
                 password: password,
               }
-            ).then(  console.log("it shoulde br dones"))
-            console.log("sh2it")
+            ).then( )
           }
         else{
           setData(loginerr,"invalid login you have tried "+getData(Trys)+" times you have only 3 Tries   ");
-          console.log("shit")
+
         }
 
 
