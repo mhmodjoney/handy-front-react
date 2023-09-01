@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import IconButton from "@mui/material/IconButton";
+import IconButton from "@mui/material/IconButton"; 
 import EmailIcon from "@mui/icons-material/Email";
 import { validateEmail } from "../utils/utils";
 import { API_URL_ROOT } from "../data/constants";
@@ -15,11 +15,22 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {
   Login as LoginLocal,
   adminLogin as AdminLoginLocal,
+  Wrong_pass as PassLocal,
+  getData,DATE_WRONG,Trys,setData,loginerr
 } from "../utils/Storage";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "../custom-hooks/QueryString";
 
 export default function Login() {
+  var currentDate = new Date();
+  const formattedDate = currentDate.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -27,10 +38,52 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  // useEffect(()=>{
+  //   console.log("dbdb");
+  //   currentDate = new Date();
+  //   const lastdatestr=getData(DATE_WRONG)
+  //   const lastdate= new Date(lastdatestr)  
+  //   if(lastdate==null){
+  //  console.log("not yet");
+  //   }
+  //   else if (currentDate > lastdate ){
+  //     console.log(" yet");
+  //   }
+  //   else{
+  //     console.log("not ");
+  //   }
+    
+  // },[]);
+    const handleOtherButtonClick = () => {
+    setIsButtonDisabled(true);
+  };
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+      setIsButtonDisabled(false);
+    }, 30000); // 30 seconds in milliseconds
+
+    return () => clearTimeout(timer);
+  }, [isButtonDisabled]);
 
   const data = useQuery();
   const isAdmin = data.get("admin");
+
   const submit = () => {
+    currentDate = new Date();
+    var lastdatestr=getData(DATE_WRONG)
+    var lastdate= new Date(lastdatestr)        
+   console.log("befor")
+   console.log( lastdate)  
+   console.log( currentDate)
+   
+   if(lastdate!=null && lastdate>currentDate){
+    setData(loginerr,'you cant submit for'+ (Math.floor((lastdate - currentDate) / 1000 ))+' sec')
+    console.log("dd")
+    setLoginError(true)
+    return
+   }
     if (!validateEmail(email)) {
       setEmailError(true);
       return;
@@ -56,6 +109,8 @@ export default function Login() {
             data.gender,
             data.state
           );
+          setData(Trys,0)
+          setData(loginerr,'')
           navigate("/admin");
         } else {
           LoginLocal(
@@ -65,6 +120,8 @@ export default function Login() {
             data.birthDate,
             data.gender
           );
+          setData(Trys,0)
+          setData(loginerr,'')
           navigate("/");
         }
 
@@ -73,7 +130,40 @@ export default function Login() {
       .catch((error) => {
         setLoading(false);
         if (error.response.status === 400) {
-          setLoginError(true);
+          setLoginError(true)
+          //here we go 
+         var loctrys= getData(Trys)
+         if (loctrys==null){
+          loctrys=0
+         }
+         var addedtrys =(parseInt(loctrys)+1).toString()
+         setData(Trys,addedtrys)
+          if( addedtrys>=3 && addedtrys<4){
+            setData(loginerr,"you tried 3 times you cant submit for "+(Math.floor((lastdate - currentDate) / 1000 ))+" sec ");
+            console.log("iii")
+            // handleOtherButtonClick()
+            currentDate.setSeconds(currentDate.getSeconds() + 30);
+            console.log(currentDate)
+           setData(DATE_WRONG,currentDate)
+          }
+          else if(addedtrys>=5){
+            setData(loginerr,"you have submitted 5 wrong pasword your account have been deactivated  check your email");
+            axios
+            .post(
+              API_URL_ROOT + (  "/api/Auth/wrongpass" ),
+              {
+                email: email,
+                password: password,
+              }
+            ).then(  console.log("it shoulde br dones"))
+            console.log("sh2it")
+          }
+        else{
+          setData(loginerr,"invalid login you have tried "+getData(Trys)+" times you have only 3 Tries   ");
+          console.log("shit")
+        }
+
+
         }
       });
   };
@@ -173,11 +263,12 @@ export default function Login() {
               </Link>
             </>
           )}
-          {loginError ? (
-            <p className="text-danger m-0 p-0 mt-2">invalid login</p>
+        
+            {loginError ? (
+            <p className="text-danger m-0 p-0 mt-2">{getData(loginerr)}</p>
           ) : null}
           <button
-            className="btn btn-dark m-2"
+            className="btn btn-dark m-2"  disabled={isButtonDisabled}
             onClick={loading ? null : submit}
           >
             {loading ? (

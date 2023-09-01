@@ -9,6 +9,21 @@ export const ADMIN_EMAIL = "admin-email-key";
 export const ADMIN_BIRTH = "admin-birth-key";
 export const ADMIN_GENDER = "admin-gender-key";
 export const ADMIN_STATE = "admin-state-key";
+export const DATE_WRONG = "date_wrong";
+export const Trys = "Trys";
+export const loginerr = "loginerr";
+
+
+export const Wrong_pass = (date, trys) => {
+  localStorage.setItem(DATE_WRONG, date);
+  localStorage.setItem(Trys, trys);
+};
+
+export const Rest_pass = () => {
+  localStorage.setItem(DATE_WRONG, null);
+  localStorage.setItem(Trys, null);
+};
+
 
 export const Login = (token, username, email, birth, gender) => {
   localStorage.setItem(TOKEN, token);
@@ -17,6 +32,7 @@ export const Login = (token, username, email, birth, gender) => {
   localStorage.setItem(BIRTH, birth);
   localStorage.setItem(GENDER, gender);
 };
+
 
 export const Logout = () => {
   localStorage.setItem(TOKEN, null);
